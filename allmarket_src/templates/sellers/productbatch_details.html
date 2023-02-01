@@ -1,0 +1,133 @@
+{% extends "layout.html" %}
+{% block head_title %} Product Batch Details | {{ block.super }}{% endblock head_title %}
+
+{% block breadcumb %}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'sellers:seller_details' seller.pk %}"> {{ productbatch.seller }} </a></li>      
+      <li class="breadcrumb-item"><a href=""> {{ productbatch.title }} </a></li>
+      <li class="breadcrumb-item active" aria-current="page">Details</li>
+
+      <!-- Breadcrumb Menu-->
+      <li class="breadcrumb-menu d-md-down-none">
+          <div class="btn-group" role="group" aria-label="Button group">
+              <a class="btn" href="#"><i class="icon-speech"></i></a>
+              <a class="btn" href="{% url 'home' %}"><i class="icon-graph"></i> &nbsp;Dashboard</a>
+              <a class="btn" href="#"><i class="icon-settings"></i> &nbsp;Settings</a>
+          </div>
+      </li>      
+    </ol>
+  </nav>
+{% endblock breadcumb %}
+
+{% block content %}
+<div id="PatchDetails" class="inner-wrapper">
+
+  {% for message in messages %}
+    <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  {% endfor %}
+
+  <div class="row page-show">
+    <div class="col-md-6 col-sm-8 col-12">
+      <div class="mt-3">
+        <h5>BATCH DETAILS</h5>
+        <table>
+          <tbody>
+              <tr>
+                  <td>Seller Title:</td>
+                  <td class="td-data"><b>{{ productbatch.seller }}</b></td>
+              </tr>
+              <tr>
+                  <td>Batch Name:</td>
+                  <td class="td-data"><b>{{ productbatch.title }}</b></td>
+              </tr> 
+              <tr>
+                  <td>Arrival Date:</td>
+                  <td class="td-data"><b>{{ productbatch.arrival_Date }}</b></td>
+              </tr> 
+              <tr>
+                  <td>Origin:</td>
+                  <td class="td-data text-danger"><b>{{ productbatch.origin }}</b></td>
+              </tr>
+              <tr>
+                  <td>Destination:</td>
+                  <td class="td-data"><b>{{ productbatch.destination }}</b></td>
+              </tr>
+              <tr>
+                  <td>Updated:</td>
+                  <td class="td-data"><b>{{ productbatch.updated }}</b></td>
+              </tr> 
+              <tr>
+                  <td>Timestamp:</td>
+                  <td class="td-data"><b>{{ productbatch.timestamp }}</b></td>
+              </tr>  
+          </tbody>
+        </table>
+      </div>
+
+      <br>
+      <a href="{% url 'sellers:productbatch_update' seller.pk productbatch.pk %}" class="btn btn-primary my-3">Edit</a>
+      <a href="{% url 'sellers:seller_details' seller.pk %}" class="btn btn-outline-secondary" role="button">Nevermind</a>
+      <a href="{% url 'sellers:productbatch_delete' seller.pk productbatch.pk %}" class="btn btn-danger float-right my-3">Delete</a>
+    </div>
+  </div>
+
+  <br>
+  
+    <h5 class="my-3">PRODUCTS IN THIS PRODUCT BATCH</h5>
+    <div class="card">
+    <div class="card-header">
+        <i class="fa fa-list"></i> Products List
+    </div>
+    <div class="card-body">        
+    <table class="table table-bordered table-striped table-sm mb-0">
+      <thead class="thead-dark">
+        <tr>
+          <th>Product Title</th>
+          <th>Type</th>
+          <th>Category</th>
+          <th>Origin</th>
+          <th>Manufacturer</th>
+          <th>Is Digital</th>
+          <th>Is Active</th>
+          <th class="text-right">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for product in products %}
+          <tr>
+            <td class="align-middle"><a href="{% url 'products:product_seller_details' seller.pk productbatch.pk product.pk %}">{{ product.title }}</a></td>
+            <td class="align-middle">{{ product.product_type}}</td>
+            <td class="align-middle">{{ product.category}}</td>
+            <td class="align-middle">{{ product.origin }}</td>
+            <td class="align-middle">{{ product.manufacturer }}</td>
+            <td class="align-middle">{{ product.is_digital }}</td>
+            <td class="align-middle">{{ product.active }}</td>
+            <td class="text-right">
+                <a href="{% url 'products:product_seller_details' seller.pk productbatch.pk product.pk %}" data-toggle="tooltip" title="View" class="text-primary"><i class="fa fa-user"></i></a>
+                <a data-toggle="tooltip" title="Edit" href="" title="edit" class="text-success mx-1"><i class="fa fa-pencil"></i></a>
+                <a data-toggle="tooltip" title="Delete" href="" class="text-danger"><i class="fa fa-times"></i></a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td class="bg-light text-center font-italic" colspan="5">
+              <p class="text-muted font-italic mb-0">You haven't created any products yet. Go ahead and <a href="{% url 'products:product_add' seller.pk productbatch.pk %}">add the first product to your product</a>.</p>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+    <div class="my-3">
+      <a href="{% url 'products:product_add' seller.pk productbatch.pk %}" class="btn btn-primary btn-sm">Add new product</a>
+    </div>
+  </div>
+{% endblock content %} 

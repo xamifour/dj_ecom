@@ -1,0 +1,298 @@
+{% extends "layout.html" %}
+{% block head_title %} Product Search | {{ block.super }}{% endblock head_title %}
+
+
+{% block content %}
+
+    <!-- Page Title-->
+    <div class="p/age-title-wrapper pt-3" aria-label="Page title">
+      <div class="container">
+        {% if input_queried %}
+          <p>Showing results for <b class="text-info font-weight-semibold">"{{ input_queried }}"</b></p>
+        {% else %}
+          <p class="text-warning">No item specified</p>
+        {% endif %}
+      </div>
+    </div>
+    <hr class="my-3">
+    <!-- Page Content-->
+    <!-- Toast notifications-->
+    <div class="toast-container toast-bottom-center">
+      <div class="toast mb-3" id="cart-toast" data-delay="5000" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header bg-success text-white"><i class="mr-2" data-feather="check-circle" style="width: 1.25rem; height: 1.25rem;"></i><span class="font-weight-semibold mr-auto">Added to cart!</span>
+          <button class="close text-white ml-2 mb-1" type="button" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="toast-body">This item was added to your cart.</div>
+      </div>
+      <div class="toast mb-3" id="compare-toast" data-delay="5000" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header bg-info text-white"><i class="mr-2" data-feather="info" style="width: 1.25rem; height: 1.25rem;"></i><span class="font-weight-semibold mr-auto">Added to comparison!</span>
+          <button class="close text-white ml-2 mb-1" type="button" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="toast-body">This item was added to comparison table.</div>
+      </div>
+      <div class="toast mb-3" id="wishlist-toast" data-delay="5000" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header bg-info text-white"><i class="mr-2" data-feather="info" style="width: 1.25rem; height: 1.25rem;"></i><span class="font-weight-semibold mr-auto">Added to wishlist!</span>
+          <button class="close text-white ml-2 mb-1" type="button" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="toast-body">This item was added to your wishlist.</div>
+      </div>
+      <div class="toast mb-3" id="profile-toast" data-delay="5000" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header bg-success text-white"><i class="mr-2" data-feather="check-circle" style="width: 1.25rem; height: 1.25rem;"></i><span class="font-weight-semibold mr-auto">Updated!</span>
+          <button class="close text-white ml-2 mb-1" type="button" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="toast-body">Your profile info updated successfuly.</div>
+      </div>
+      <div class="toast mb-3" id="address-toast" data-delay="5000" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header bg-success text-white"><i class="mr-2" data-feather="check-circle" style="width: 1.25rem; height: 1.25rem;"></i><span class="font-weight-semibold mr-auto">Updated!</span>
+          <button class="close text-white ml-2 mb-1" type="button" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="toast-body">Your addresses info updated successfuly.</div>
+      </div>
+    </div>
+    <div class="container pb-5 mb-4">
+      <div class="row">
+        <div class="col-lg-3" style="border-right: 1px solid #eee;">
+          <!-- Shop sidebar-->
+          <div class="offcanvas-sidebar">
+            <div class="offcanvas-sidebar-toggle"><span class="toggle-knob"><i data-feather="chevrons-right"></i>Sidebar</span></div>
+            <div class="offcanvas-sidebar-body">
+              <div class="offcanvas-sidebar-body-inner">
+                <!-- Categories-->
+                <div class="widget widget-categories mb-4 py-1">
+                  <h3 class="widget-title">Product categories</h3>
+                  <ul id="shopCategories">
+
+                    {% for items in sub_categories %}
+                      <li class="mb-2"><a href="?category={{ items.title }}">{{ items.title }}</a></li>
+                    {% endfor %}
+                    
+                    <li class="has-children"><a href="#computers" data-toggle="collapse"><i class="widget-categories-indicator" data-feather="chevron-down"></i>Computers &amp; Accessories<span class="badge text-muted ml-1">(1138)</span></a>
+                      <ul class="collapse show" id="computers" data-parent="#shopCategories">
+                        <li><a href="#">Desktop PCs<span class="badge text-muted ml-1">(508)</span></a>
+                          <ul>
+                            <li><a href="#">Office PC</a></li>
+                            <li><a href="#">Gaming PC</a></li>
+                            <li><a href="#">PC for Learning</a></li>
+                          </ul>
+                        </li>
+                        <li><a href="#">Laptops<span class="badge text-muted ml-1">(423)</span></a>
+                          <ul>
+                            <li><a href="#">15' Screens</a></li>
+                            <li><a href="#">13' Screens</a></li>
+                            <li><a href="#">Touch Screens</a></li>
+                          </ul>
+                        </li>
+                        <li><a href="#">Nettops<span class="badge text-muted ml-1">(97)</span></a></li>
+                        <li><a href="#">PC Accessories<span class="badge text-muted ml-1">(110)</span></a></li>
+                      </ul>
+                    </li>
+                    <li class="has-children"><a class="collapsed" href="#smartphones" data-toggle="collapse"><i class="widget-categories-indicator" data-feather="chevron-down"></i>Smartphones &amp; Tablets<span class="badge text-muted ml-1">(2356)</span></a>
+                      <ul class="collapse" id="smartphones" data-parent="#shopCategories">
+                        <li><a href="#">Smartphones<span class="badge text-muted ml-1">(1032)</span></a>
+                          <ul>
+                            <li><a href="#">Android</a></li>
+                            <li><a href="#">iOS</a></li>
+                            <li><a href="#">QHD Screen</a></li>
+                            <li><a href="#">WQHD Screen</a></li>
+                            <li><a href="#">Full HD Screen</a></li>
+                            <li><a href="#">Super Amoled</a></li>
+                          </ul>
+                        </li>
+                        <li><a href="#">Tablets<span class="badge text-muted ml-1">(937)</span></a>
+                          <ul>
+                            <li><a href="#">WiFi only</a></li>
+                            <li><a href="#">WiFi + 4G</a></li>
+                            <li><a href="#">Android</a></li>
+                            <li><a href="#">iOS</a></li>
+                          </ul>
+                        </li>
+                        <li><a href="#">Phablets<span class="badge text-muted ml-1">(386)</span></a></li>
+                      </ul>
+                    </li>
+                    <li class="has-children"><a class="collapsed" href="#tv" data-toggle="collapse"><i class="widget-categories-indicator" data-feather="chevron-down"></i>TV, Video &amp; Audio<span class="badge text-muted ml-1">(420)</span></a>
+                      <ul class="collapse" id="tv" data-parent="#shopCategories">
+                        <li><a href="#">Smart TV Sets<span class="badge text-muted ml-1">(180)</span></a></li>
+                        <li><a href="#">Blue-Ray Players<span class="badge text-muted ml-1">(132)</span></a></li>
+                        <li><a href="#">Sound Systems<span class="badge text-muted ml-1">(47)</span></a></li>
+                        <li><a href="#">Home Theaters<span class="badge text-muted ml-1">(61)</span></a></li>
+                      </ul>
+                    </li>
+                    <li class="has-children"><a class="collapsed" href="#cameras" data-toggle="collapse"><i class="widget-categories-indicator" data-feather="chevron-down"></i>Cameras, Photo &amp; Video<span class="badge text-muted ml-1">(874)</span></a>
+                      <ul class="collapse" id="cameras" data-parent="#shopCategories">
+                        <li><a href="#">Photo Cameras<span class="badge text-muted ml-1">(211)</span></a></li>
+                        <li><a href="#">Video Cameras<span class="badge text-muted ml-1">(195)</span></a></li>
+                        <li><a href="#">Action Cameras<span class="badge text-muted ml-1">(159)</span></a></li>
+                        <li><a href="#">Tripods &amp; Stands<span class="badge text-muted ml-1">(203)</span></a></li>
+                        <li><a href="#">Lenses<span class="badge text-muted ml-1">(106)</span></a></li>
+                      </ul>
+                    </li>
+                    <li class="has-children"><a class="collapsed" href="#headphones" data-toggle="collapse"><i class="widget-categories-indicator" data-feather="chevron-down"></i>Headphones<span class="badge text-muted ml-1">(1239)</span></a>
+                      <ul class="collapse" id="headphones" data-parent="#shopCategories">
+                        <li><a href="#">Earbud Headphones<span class="badge text-muted ml-1">(752)</span></a></li>
+                        <li><a href="#">Over-Ear Headphones<span class="badge text-muted ml-1">(487)</span></a></li>
+                        <li><a href="#">Bluetooth Headphones<span class="badge text-muted ml-1">(205)</span></a></li>
+                        <li><a href="#">Sports &amp; Fitness Headphones<span class="badge text-muted ml-1">(96)</span></a></li>
+                        <li><a href="#">Noise-Cancelling Headphones<span class="badge text-muted ml-1">(113)</span></a></li>
+                      </ul>
+                    </li>
+                    <li class="has-children"><a class="collapsed" href="#wearables" data-toggle="collapse"><i class="widget-categories-indicator" data-feather="chevron-down"></i>Wearable Electronics<span class="badge text-muted ml-1">(340)</span></a>
+                      <ul class="collapse" id="wearables" data-parent="#shopCategories">
+                        <li><a href="#">Smart Watches<span class="badge text-muted ml-1">(175)</span></a></li>
+                        <li><a href="#">Fitness Trackers<span class="badge text-muted ml-1">(123)</span></a></li>
+                        <li><a href="#">Smart Glasses<span class="badge text-muted ml-1">(42)</span></a></li>
+                      </ul>
+                    </li>
+                    <li class="has-children"><a class="collapsed" href="#printers" data-toggle="collapse"><i class="widget-categories-indicator" data-feather="chevron-down"></i>Printers &amp; Ink<span class="badge text-muted ml-1">(512)</span></a>
+                      <ul class="collapse" id="printers" data-parent="#shopCategories">
+                        <li><a href="#">All-In-One<span class="badge text-muted ml-1">(304)</span></a></li>
+                        <li><a href="#">Copying<span class="badge text-muted ml-1">(115)</span></a></li>
+                        <li><a href="#">Faxing<span class="badge text-muted ml-1">(211)</span></a></li>
+                        <li><a href="#">Photo Printing<span class="badge text-muted ml-1">(68)</span></a></li>
+                        <li><a href="#">Printing Only<span class="badge text-muted ml-1">(143)</span></a></li>
+                        <li><a href="#">Scanning<span class="badge text-muted ml-1">(122)</span></a></li>
+                      </ul>
+                    </li>
+                    <li class="has-children"><a class="collapsed" href="#games" data-toggle="collapse"><i class="widget-categories-indicator" data-feather="chevron-down"></i>Video Games<span class="badge text-muted ml-1">(656)</span></a>
+                      <ul class="collapse" id="games" data-parent="#shopCategories">
+                        <li><a href="#">PlayStation 4<span class="badge text-muted ml-1">(100)</span></a></li>
+                        <li><a href="#">Xbox One<span class="badge text-muted ml-1">(92)</span></a></li>
+                        <li><a href="#">Nintendo Switch<span class="badge text-muted ml-1">(19)</span></a></li>
+                        <li><a href="#">Video Games<span class="badge text-muted ml-1">(397)</span></a></li>
+                        <li><a href="#">Accessories<span class="badge text-muted ml-1">(48)</span></a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+                <!-- Price range-->
+                <div class="widget mb-4 pb-3">
+                  <h3 class="widget-title">Price range</h3>
+                  <form class="range-slider" data-start-min="250" data-start-max="650" data-min="0" data-max="1000" data-step="1">
+                    <div class="ui-range-slider"></div>
+                    <footer class="ui-range-slider-footer">
+                      <div class="column">
+                        <button class="btn btn-outline-primary btn-sm" type="submit">Filter</button>
+                      </div>
+                      <div class="column">
+                        <div class="ui-range-values">
+                          <div class="ui-range-label">Price:</div>
+                          <div class="ui-range-value-min">$<span></span>
+                            <input type="hidden">
+                          </div>&nbsp;&ndash;&nbsp;
+                          <div class="ui-range-value-max">$<span></span>
+                            <input type="hidden">
+                          </div>
+                        </div>
+                      </div>
+                    </footer>
+                  </form>
+                </div>
+                <!-- Price filter    -->
+                <div class="widget mb-4 pb-1">
+                  <h3 class="widget-title">Filter by price</h3>
+                  <div class="custom-control custom-checkbox mb-1">
+                    <input class="custom-control-input" type="checkbox" id="price-1">
+                    <label class="custom-control-label" for="price-1">$10 - $50<span class="text-muted ml-1">(208)</span></label>
+                  </div>
+                  <div class="custom-control custom-checkbox mb-1">
+                    <input class="custom-control-input" type="checkbox" id="price-2">
+                    <label class="custom-control-label" for="price-2">$50 - $100<span class="text-muted ml-1">(311)</span></label>
+                  </div>
+                  <div class="custom-control custom-checkbox mb-1">
+                    <input class="custom-control-input" type="checkbox" id="price-3">
+                    <label class="custom-control-label" for="price-3">$100 - $500<span class="text-muted ml-1">(485)</span></label>
+                  </div>
+                  <div class="custom-control custom-checkbox mb-1">
+                    <input class="custom-control-input" type="checkbox" id="price-4">
+                    <label class="custom-control-label" for="price-4">$500 - $1,000<span class="text-muted ml-1">(213)</span></label>
+                  </div>
+                  <div class="custom-control custom-checkbox mb-1">
+                    <input class="custom-control-input" type="checkbox" id="xs">
+                    <label class="custom-control-label" for="xs">$1,000 - $5,000<span class="text-muted ml-1">(197)</span></label>
+                  </div>
+                </div>
+                <!-- Brand filter    -->
+                <div class="widget mb-4 pb-1">
+                  <h3 class="widget-title">Filter by brand</h3>
+                  <div class="custom-control custom-checkbox mb-1">
+                    <input class="custom-control-input" type="checkbox" id="apple">
+                    <label class="custom-control-label" for="apple">Apple<span class="text-muted ml-1">(254)</span></label>
+                  </div>
+                  <div class="custom-control custom-checkbox mb-1">
+                    <input class="custom-control-input" type="checkbox" id="bosh">
+                    <label class="custom-control-label" for="bosh">Bosh<span class="text-muted ml-1">(39)</span></label>
+                  </div>
+                  <div class="custom-control custom-checkbox mb-1">
+                    <input class="custom-control-input" type="checkbox" id="canon">
+                    <label class="custom-control-label" for="canon">Canon Inc.<span class="text-muted ml-1">(128)</span></label>
+                  </div>
+                  <div class="custom-control custom-checkbox mb-1">
+                    <input class="custom-control-input" type="checkbox" id="dell">
+                    <label class="custom-control-label" for="dell">Dell<span class="text-muted ml-1">(310)</span></label>
+                  </div>
+                  <div class="custom-control custom-checkbox mb-1">
+                    <input class="custom-control-input" type="checkbox" id="hp">
+                    <label class="custom-control-label" for="hp">Hewlett-Packard<span class="text-muted ml-1">(46)</span></label>
+                  </div>
+                  <div class="custom-control custom-checkbox mb-1">
+                    <input class="custom-control-input" type="checkbox" id="hitachi">
+                    <label class="custom-control-label" for="hitachi">Hitachi<span class="text-muted ml-1">(217)</span></label>
+                  </div>
+                  <div class="custom-control custom-checkbox mb-1">
+                    <input class="custom-control-input" type="checkbox" id="lg">
+                    <label class="custom-control-label" for="lg">LG Electronics<span class="text-muted ml-1">(310)</span></label>
+                  </div>
+                  <div class="custom-control custom-checkbox mb-1">
+                    <input class="custom-control-input" type="checkbox" id="panasonic">
+                    <label class="custom-control-label" for="panasonic">Panasonic<span class="text-muted ml-1">(74)</span></label>
+                  </div>
+                  <div class="custom-control custom-checkbox mb-1">
+                    <input class="custom-control-input" type="checkbox" id="sony">
+                    <label class="custom-control-label" for="sony">Sony<span class="text-muted ml-1">(235)</span></label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-9">
+          <!-- Toolbar-->
+          <div class="d-flex flex-wrap justify-content-center justify-content-sm-between pb-3">
+            <div class="d-flex flex-wrap">
+              <div class="form-inline flex-nowrap mr-3 mr-sm-4 pb-3">
+                <label class="text-nowrap mr-2 d-none d-sm-block" for="sorting">Sort by:</label>
+                <select class="form-control custom-select" id="sorting">
+                  <option>Popularity</option>
+                  <option>Low - Hight Price</option>
+                  <option>High - Low Price</option>
+                  <option>Average Rating</option>
+                  <option>A - Z Order</option>
+                  <option>Z - A Order</option>
+                </select>
+              </div>
+              <div class="form-inline flex-nowrap pb-3">
+                <label class="mr-2 d-none d-sm-block" for="number">Show:</label>
+                <select class="form-control custom-select mr-sm-2" id="number">
+                  <option>12</option>
+                  <option>24</option>
+                  <option>48</option>
+                  <option>96</option>
+                </select><small class="form-text text-muted text-nowrap d-none d-sm-block">from 860</small>
+              </div>
+            </div>
+            <div class="form-inline d-none d-md-flex flex-nowrap pb-3">
+              <label class="mr-2" for="pager">Page:</label>
+              <input class="form-control mr-2" type="number" id="pager" value="2" style="width: 4rem;"><span class="form-text">/ 30</span>
+            </div>
+          </div>
+
+          {% include 'products/product_search_snippet1.html' %}
+
+          <!-- Pagination-->
+          {% include 'includes/pagination.html' %}
+          
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% endblock content %}

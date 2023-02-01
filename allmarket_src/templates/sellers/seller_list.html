@@ -1,0 +1,69 @@
+{% extends "layout.html" %}
+{% block head_title %} seller | {{ block.super }}{% endblock head_title %}
+
+{% block breadcumb %}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb page-show">
+      <li class="breadcrumb-item active" aria-current="page">{% for seller in selleres %} {{ seller.title }} {% endfor %}</li>
+      
+      <!-- Breadcrumb Menu-->
+      <li class="breadcrumb-menu d-md-down-none">
+          <div class="btn-group" role="group" aria-label="Button group">
+              <a class="btn" href="#"><i class="icon-speech"></i></a>
+              <a class="btn" href="{% url 'home' %}"><i class="icon-graph"></i> &nbsp;Dashboard</a>
+              <a class="btn" href="#"><i class="icon-settings"></i> &nbsp;Settings</a>
+          </div>
+      </li>
+    </ol>
+  </nav>
+{% endblock breadcumb %}
+
+{% block content %}
+<h5 class="my-3">MY LIST OF COMPANIES</h5>
+
+  {% if messages %}
+      {% for message in messages %}
+          <div class="alert alert-success alert-dismissable">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+              {{ message }}
+          </div>
+      {% endfor %}
+  {% endif %}
+  
+  <div class="card page-show table-responsive">
+    <table class="table mb-0">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Registration</th>
+          <th>Account</th>
+          <th>Category</th>
+          <th>Type</th>
+          <th class="text-right">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for seller in sellers %}
+          <tr>
+            <td class="align-middle"><a href="{% url 'sellers:seller_details' seller.pk %}">{{ seller.title }}</a></td>
+            <td class="align-middle">{{ seller.reg_Number}}</td>
+            <td class="align-middle">{{ seller.owner }}</td>
+            <td class="align-middle">{{ seller.category.get_html_badge }}</td>
+            <td class="align-middle">{{ seller.seller_Type }}</td>
+            <td class="text-right">
+              <a href="{% url 'sellers:seller_details' seller.pk %}" class="btn btn-primary">Details</a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td class="bg-light text-center font-italic" colspan="5">You haven't created any seller yet.</td>
+          </tr>
+          <div class="card-footer">
+            <a href="{% url 'sellers:seller_add' %}" class="btn btn-primary btn-sm  my-3">Add new seller</a>
+          </div>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  
+{% endblock content %}

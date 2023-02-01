@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+{% block head_title %} seller Add | {{ block.super }}{% endblock head_title %}
+
+{% load crispy_forms_tags %}
+
+{% block page_title %}
+  Add a new seller
+{% endblock page_title %}
+
+{% block breadcumb %}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'sellers:seller_list' %}">My seller</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Seller Form</li>
+    </ol>
+  </nav>
+{% endblock breadcumb %}
+
+{% block content %}  
+  <div class="row mb-3">
+    <div class="col-md-6 col-sm-8 col-12">
+      <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form|crispy}}
+        {% if seller %}
+        <button type="submit" class="btn btn-warning">Save Changes</button>
+        {% else %}
+        <button type="submit" class="btn btn-success">add</button>
+        {% endif %}
+        <a href="{% url 'sellers:seller_list' %}" class="btn btn-outline-secondary" role="button">Nevermind</a>
+      </form>
+    </div>
+  </div>
+{% endblock content %}

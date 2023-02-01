@@ -1,0 +1,85 @@
+{% extends "layout.html" %}
+{% block head_title %} {{ seller.seller_Code }} Stat | {{ block.super }}{% endblock head_title %}
+
+{% block page_title %}
+ Seller Statistics
+{% endblock page_title %}
+
+{% block breadcumb %}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page">{% for seller in selleres %} {{ seller.seller_Code }} {% endfor %}</li>
+    </ol>
+  </nav>
+{% endblock breadcumb %}
+
+{% block content %}
+<div id="SellerStats" class="inner-wrapper">
+
+<div class='row mt-2'>
+    <div class='col-12'>
+        <h4 class="display-6">Sales Data</h4>
+    </div>
+</div>
+<hr>
+<div class='row my-5'>
+    <div class='col-md-4'>
+        <h4 class="display-6">Today's sales</h4>
+        <hr/>
+        <p>Recent Total: ${{ today.recent_data.total__sum }}</p>
+        <ul>
+        {% for order in today.recent|slice:":5" %}
+            <li class='my-3'>Order #{{ order.order_id }}<br/>
+            ${{ order.total }}<br/>
+            {{ order.updated|timesince }} ago</li>
+        {% endfor %}
+        </ul>
+   
+        <h4 class="display-6">This week's sales</h4>
+        <hr/>
+        <p>Recent Total: ${{ this_week.recent_data.total__sum }}</p>
+        <ul>
+        {% for order in this_week.recent|slice:":5" %}
+            <li class='my-3'>Order #{{ order.order_id }}<br/>
+            ${{ order.total }}<br/>
+            {{ order.updated|timesince }} ago</li>
+        {% endfor %}
+        </ul>
+    </div>
+    <div class='col-md-7'>
+        <div class="card">
+            <div class="card-header">
+                Chart
+            </div>
+            <div class="card-body">    
+                <canvas class='cfe-render-chart' id="thisWeekSales" data-type='week' width="300" height="150"></canvas> 
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr/>
+
+<div class='row my-5'>
+    <div class='col-12'>
+        <h4 class="display-6">Previous 4 weeks</h4>
+    </div>
+    <div class='col-md-4'>
+        <p>Orders Total: ${{ last_four_weeks.recent_data.total__sum }}</p>
+        <p>Shipped Total: {% if last_four_weeks.shipped_data.total__sum %}${{ last_four_weeks.shipped_data.total__sum }} {% endif %}</p>
+        <p>Paid Totals: ${{ last_four_weeks.paid_data.total__sum }}</p>
+    </div>
+     <div class='col-md-7'>
+        <div class="card">
+            <div class="card-header">
+                Chart
+            </div>
+            <div class="body">          
+               <canvas class='cfe-render-chart' id="fourWeekSales" data-type='4weeks' width="300" height="120"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+{% endblock content %}

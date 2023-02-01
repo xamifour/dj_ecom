@@ -1,0 +1,31 @@
+{% load static %}
+
+<!-- Vendor Styles including: Font Icons, Plugins, etc.-->
+<link rel="stylesheet" media="screen" href="{% static 'dist/css/vendor.min.css' %}">
+<!-- Main Theme Styles + Bootstrap -->
+<link rel="stylesheet" media="screen" id="main-styles" href="{% static 'dist/css/theme.min.css' %}">
+<!-- custom css -->
+<link rel="stylesheet" media="screen" id="custom-styles" href="{% static 'dist/css/custom.css' %}">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans+Pro:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,600,600i,700,700i,800|Montserrat:300,400,700" rel="stylesheet">
+<!--<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">-->
+
+<!-- Fontawesome CSS 
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+-->
+
+<!-- Bootstrap CSS 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">-->
+
+
+<!--
+{% if user.is_authenticated and user.is_seller %}
+<link href="{% static 'css/seller.css' %}" rel="stylesheet" >
+{% else %}
+<link href="{% static 'css/other.css' %}" rel="stylesheet">
+{% endif %}  
+--> 
+
+
+{% block extracss %}{% endblock extracss %}<!-- Page Specific CSS goes HERE -->

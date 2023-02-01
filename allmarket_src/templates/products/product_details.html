@@ -1,0 +1,329 @@
+{% extends "layout.html" %}
+{% block head_title %} Product Details | {{ block.super }}{% endblock head_title %}
+
+{% load static %}
+
+
+{% block content %}
+
+    <!-- Size chart modal-->
+    {% include 'products/product_size_chart.html' %}      
+    <div class="container pt-4">
+      <small>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="mt-n1 mr-1"><i data-feather="home"></i></li>
+          <li class="breadcrumb-item"><a href="index.html">Home</a>
+          </li>
+          <li class="breadcrumb-item"><a href="#">Electronics</a>
+          </li>
+          <li class="breadcrumb-item"><a href="#">Action cameras</a>
+          </li>
+        </ol>
+      </nav></small>
+    </div>
+    <!-- Page Content-->
+    <div class="container pb-5">
+      <div class="row pt-3">
+        <div class="col-lg-6">
+          <!-- Product title and price (visible md and down)-->
+          <div class="d-lg-none pb-2">
+            <h1 class="pt-1 h5" style="font-weight: 500;">{{ object.title_and_description }}</h1>
+            <h2 class="h3 font-weight-light">
+              {% if object.get_discount %}
+                <del class="lead text-muted mr-2">${{ object.get_price }}</del><span class="text-primary">${{ object.get_discounted_price }}</span>
+              {% else %}
+                ${{ object.get_price }}
+              {% endif %}
+            </h2>
+          </div>
+          <!-- Product gallery-->
+          <div class="product-gallery mb-2">
+            <ul class="product-thumbnails">
+              <li class="active"><a href="#one"><img src="{{ object.img1.url }}" alt="Product thumb"></a></li>
+              {% if object.img2 %}
+              <li><a href="#two"><img src="{{ object.img2.url }}" alt="Product thumb"></a></li>{% endif %}
+              {% if object.img3 %}
+              <li><a href="#three"><img src="{{ object.img3.url }}" alt="Product thumb"></a></li>{% endif %}
+              {% if object.img4 %}
+              <li><a href="#four"><img src="{{ object.img4.url }}" alt="Product thumb"></a></li>{% endif %}
+              {% if object.img5 %}
+              <li><a href="#five"><img src="{{ object.img5.url }}" alt="Product thumb"></a></li>{% endif %}
+              <li class="video-thumbnail"><a href="#six"><span class="thumb-caption">Video</span><img src="{% static 'dist/img/shop/electronics/single/th05.jpg' %}" alt="Product thumb"></a></li>
+            </ul>
+            <div class="product-carousel owl-carousel product-image">
+              <a href="{{ object.img1.url }}" data-fancybox="prod-gallery" data-hash="one"><img s/tyle="width: 38rem; height: 36rem;" src="{{ object.img1.url }}" alt="Product"></a>
+              {% if object.img2 %}
+              <a href="{{ object.img2.url }}" data-fancybox="prod-gallery" data-hash="two"><img src="{{ object.img2.url }}" alt="Product"></a>{% endif %}
+              {% if object.img3 %}
+              <a href="{{ object.img3.url }}" data-fancybox="prod-gallery" data-hash="three"><img src="{{ object.img3.url }}" alt="Product"></a>{% endif %}
+              {% if object.img4 %}
+              <a href="{{ object.img4.url }}" data-fancybox="prod-gallery" data-hash="four"><img src="{{ object.img4.url }}" alt="Product"></a>{% endif %}
+              {% if object.img5 %}
+              <a href="{{ object.img5.url }}" data-fancybox="prod-gallery" data-hash="five"><img src="{{ object.img5.url }}" alt="Product"></a>{% endif %}
+              <div class="pt-sm-5 mt-sm-5" data-hash="six">
+                <!--<div class="embed-responsive embed-responsive-16by9">
+                  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/Ml14W2K0Few" allowfullscreen></iframe>
+                </div>-->
+                <div class="embed-responsive embed-responsive-16by9">
+                  <iframe class="embed-responsive-item" src="{{object.video_link}}" allowfullscreen></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h2 class="h6 d-flex flex-wrap justify-content-between align-items-center px-4 py-3 b/g-secondary"><span></span><a class="font-size-sm" href="/"><i data-feather="chevron-left" style="width: 1rem; height: 1rem;"></i>Continue shopping</a></h2>
+
+          <!-- Related products (visible lg and up)-->
+          <div class="d-none d-lg-block">
+            <h2 class="h3 pt-5 pb-3">You may also like</h2>
+            <div class="owl-carousel" data-owl-carousel="{ &quot;nav&quot;: false, &quot;dots&quot;: true, &quot;loop&quot;: true, &quot;margin&quot;: 15, &quot;items&quot;: 3 }">
+              
+              <div class="product-card">
+                <div class="product-thumb box-shadow-0"><a class="product-thumb-link" href="#"></a><span class="product-wishlist-btn" data-toggle="tooltip" data-placement="left" title="Add to wishlist"><i data-feather="heart"></i></span><img src="{{ object.img1.url }}" alt="Product"></div>
+                <div class="product-card-body box-shadow-0 text-center"><a class="product-meta" href="#">Men's shoes</a>
+                  <h3 class="product-card-title"><a href="#">Calvin Klein Jeans Keds</a></h3><span class="text-primary">$125.00</span>
+                </div>
+              </div>
+
+              <div class="product-card">
+                <div class="product-thumb box-shadow-0"><a class="product-thumb-link" href="#"></a><span class="badge badge-danger rounded-0">Sale -10%</span><span class="product-wishlist-btn" data-toggle="tooltip" data-placement="left" title="Add to wishlist"><i data-feather="heart"></i></span><img src="{{ object.img1.url }}" alt="Product"></div>
+                <div class="product-card-body text-center">{% if object.sub_category %}<a class="product-meta" href="{{ object.get_absolute_url }}">{{object.get_sub_category}}</a>{% endif %}
+                  <h3 class="product-card-title"><a href="{{ object.get_absolute_url }}">{{object.title}}</a></h3>
+                  <h4 class="h5 font-weight-light p/t-3 pb-2">
+                    {% if object.get_discount %}
+                      <del class="lead text-muted mr-2">${{ item.get_price }}</del><span class="text-primary">${{ object.get_discounted_price }}</span>
+                    {% else %}
+                      ${{ object.get_price }}
+                    {% endif %}
+                  </h4>
+                </div>
+              </div>
+
+              <div class="product-card">
+                <div class="product-thumb box-shadow-0"><a class="product-thumb-link" href="#"></a><span class="product-wishlist-btn" data-toggle="tooltip" data-placement="left" title="Add to wishlist"><i data-feather="heart"></i></span><img src="{{ object.img1.url }}" alt="Product"></div>
+                <div class="product-card-body box-shadow-0 text-center"><a class="product-meta" href="#">Men's sandals</a>
+                  <h3 class="product-card-title"><a href="#">Big Star Flip Tops</a></h3><span class="text-primary">$10.60</span>
+                </div>
+              </div>
+              <div class="product-card">
+                <div class="product-thumb box-shadow-0"><a class="product-thumb-link" href="#"></a><span class="product-wishlist-btn" data-toggle="tooltip" data-placement="left" title="Add to wishlist"><i data-feather="heart"></i></span><img src="{% static 'dist/img/shop/apparel/01.jpg' %}" alt="Product"></div>
+                <div class="product-card-body box-shadow-0 text-center"><a class="product-meta" href="#">Men's jeans</a>
+                  <h3 class="product-card-title"><a href="#">Gues Slim Fit Jeans</a></h3><span class="text-primary">$124.99</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Product details column -->
+        
+        <div class="col-lg-6 pt-4 pt-lg-0">
+          <!-- Product title and price (visible lg and up)-->
+          {% if object.in_stock %}
+          <div class="d-none d-lg-block">
+            <h1 class="pt-1 h5" style="font-weight: 500;">{{ object.title_and_description }}</h1>
+            <a class="d-inline-block scroll-to" href="#reviews">
+              <div class="star-rating"><i class="sr-star active" data-feather="star"></i><i class="sr-star active" data-feather="star"></i><i class="sr-star active" data-feather="star"></i><i class="sr-star active" data-feather="star"></i><i class="sr-star" data-feather="star"></i>
+              </div>
+              <span class="d-inline-block align-middle font-size-sm mt-1 ml-1 text-body">295 reviews</span>
+            </a>
+            <span class="text-primary">
+              <small>
+                {% if object.sub_category %}
+                |  Category: {{ object.get_sub_category }}
+                {% endif %}
+              </small>
+            </span>
+            <h2 class="h3 font-weight-light">
+              {% if object.get_discount %}
+                <del class="lead text-muted mr-2">${{ object.get_price }}</del><span class="text-primary">${{ object.get_discounted_price }}</span>
+              {% else %}
+                ${{ object.get_price }}
+              {% endif %}
+            </h2>
+          </div>
+          <form class="pb-4">
+            <div class="form-group mb-1">
+              <label class="d-block">Choose color</label>
+              <div class="custom-control custom-option custom-control-inline mb-2">
+                <input class="custom-control-input" type="radio" name="color" value="dark" id="dark" required>
+                <label class="custom-option-label" for="dark"><span class="custom-option-color" style="background-color: #2c363f;"></span></label>
+              </div>
+              <div class="custom-control custom-option custom-control-inline mb-2">
+                <input class="custom-control-input" type="radio" name="color" value="red" id="red" required>
+                <label class="custom-option-label" for="red"><span class="custom-option-color" style="background-color: #e7484d;"></span></label>
+              </div>
+              <div class="custom-control custom-option custom-control-inline mb-2">
+                <input class="custom-control-input" type="radio" name="color" value="white" id="white" required>
+                <label class="custom-option-label" for="white"><span class="custom-option-color" style="background-color: #e0dfe4;"></span></label>
+              </div>
+              <div class="custom-control custom-option custom-control-inline mb-2">
+                <input class="custom-control-input" type="radio" name="color" value="beige" id="beige" required>
+                <label class="custom-option-label" for="beige"><span class="custom-option-color" style="background-color: #e6ddd6;"></span></label>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="pb-2 text-right"><span class="float-left">Available Stock: {{object.in_stock}}</span><a class="nav-link-inline font-size-sm" href="#size-chart" data-toggle="modal"><i class="align-bottom mr-1" data-feather="bar-chart-2"></i>Size chart</a></div>
+              <select class="form-control custom-select" id="size" name="size" required>
+                <option value>- Select a size</option>
+                {% for size in object.objects_list %}
+                  <option value="13">{{size.size}}</option>
+                {% endfor %}
+                <option value="12">12</option>
+                <option value="11.5">11.5</option>
+                <option value="11">11</option>
+              </select>
+            </div>
+            <div class="d-flex flex-wrap align-items-center pt-1">
+              <div>
+                <input class="px-2 form-control mr-2" type="number" name="quantity" style="width: 3.2rem;" value="1" required>
+              </div>
+              <div>
+                <a type="button" class="btn btn-primary px-5 mr-2" href="{{ object.get_add_to_cart_url }}"><i class="mr-2" data-feather="shopping-cart"></i>Add to cart</a>
+              </div>
+              <a class="btn box-shadow-0 nav-link-inline my-2" href="#"><i class="align-middle mr-1" data-feather="heart" style="width: 1.1rem; height: 1.1rem;"></i>Add to wishlist</a>
+            </div>
+          </form>
+          {% else %}
+          <div class="text-center">
+            <p class="display-/4 h2 font-weight-semibold text-danger">Item not availabe !</p>
+            <p>Thanks for viewing, try next time.</p>
+          </div>
+          {% endif %}
+          <!-- Product panels-->
+          <div class="accordion" id="productPanels">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="accordion-heading"><a href="#productInfo" role="button" data-toggle="collapse" aria-expanded="true" aria-controls="productInfo"><span class="d-inline-block pr-2 border-right mr-2 align-middle mt-n1"><i data-feather="info" style="width: 1.1rem; height: 1.1rem;"></i></span>About Product<span class="accordion-indicator"><i data-feather="chevron-up"></i></span></a></h3>
+              </div>
+              <div class="collapse show" id="productInfo" data-parent="#productPanels">
+                <div class="card-body">
+                  <div class="mb-0">
+                    <p>{{ object.product_info }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% if object.additional_info %}
+            <div class="card">
+              <div class="card-header">
+                <h3 class="accordion-heading"><a class="collapsed" href="#additionalInfo" role="button" data-toggle="collapse" aria-expanded="true" aria-controls="additionalInfo"><span class="d-inline-block pr-2 border-right mr-2 align-middle mt-n1"><i data-feather="info" style="width: 1.1rem; height: 1.1rem;"></i></span>Additional Information<span class="accordion-indicator"><i data-feather="chevron-up"></i></span></a></h3>
+              </div>
+              <div class="collapse" id="additionalInfo" data-parent="#productPanels">
+                <div class="card-body">
+                  <ul class="mb-0">
+                    <li>{{ object.additional_info }}</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+            <div class="card">
+              <div class="card-header">
+                <h3 class="accordion-heading"><a class="collapsed" href="#shippingOptions" role="button" data-toggle="collapse" aria-expanded="true" aria-controls="shippingOptions"><span class="d-inline-block pr-2 border-right mr-2 align-middle mt-n1"><i data-feather="truck" style="width: 1.1rem; height: 1.1rem;"></i></span>Shipping options<span class="accordion-indicator"><i data-feather="chevron-up"></i></span></a></h3>
+              </div>
+              <div class="collapse" id="shippingOptions" data-parent="#productPanels">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between border-bottom pb-2">
+                    <div>
+                      <div class="font-weight-semibold text-dark">Courier</div>
+                      <div class="font-size-sm text-muted">2 - 4 days</div>
+                    </div>
+                    <div>$26.50</div>
+                  </div>
+                  <div class="d-flex justify-content-between border-bottom py-2">
+                    <div>
+                      <div class="font-weight-semibold text-dark">Local shipping</div>
+                      <div class="font-size-sm text-muted">up to one week</div>
+                    </div>
+                    <div>${{object.shipping_in_city}}</div>
+                  </div>
+                  <div class="d-flex justify-content-between border-bottom py-2">
+                    <div>
+                      <div class="font-weight-semibold text-dark">Flat rate</div>
+                      <div class="font-size-sm text-muted">5 - 7 days</div>
+                    </div>
+                    <div>${{object.shipping_in_country}}</div>
+                  </div>
+                  <div class="d-flex justify-content-between border-bottom py-2">
+                    <div>
+                      <div class="font-weight-semibold text-dark">UPS ground shipping</div>
+                      <div class="font-size-sm text-muted">4 - 6 days</div>
+                    </div>
+                    <div>$18.00</div>
+                  </div>
+                  <div class="d-flex justify-content-between pt-2">
+                    <div>
+                      <div class="font-weight-semibold text-dark">Local pickup from store</div>
+                      <div class="font-size-sm text-muted">&mdash;</div>
+                    </div>
+                    <div>${{object.shipping_out_country}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <h3 class="accordion-heading"><a class="collapsed" href="#tagCloud" role="button" data-toggle="collapse" aria-expanded="true" aria-controls="tagCloud"><span class="d-inline-block pr-2 border-right mr-2 align-middle mt-n1"><i data-feather="tag" style="width: 1.1rem; height: 1.1rem;"></i></span>Tag cloud<span class="accordion-indicator"><i data-feather="chevron-up"></i></span></a></h3>
+              </div>
+              <div class="collapse" id="tagCloud" data-parent="#productPanels">
+                <div class="card-body"><a class="tag-link mr-2 mb-2" href="#">#sports shoes</a><a class="tag-link mr-2 mb-2" href="#">#men's shoes</a><a class="tag-link mr-2 mb-2" href="#">#sneakers</a><a class="tag-link mr-2 mb-2" href="#">#reebok classic</a><a class="tag-link mr-2 mb-2" href="#">#leather shoes</a><a class="tag-link mr-2 mb-2" href="#">#running</a><a class="tag-link mr-2 mb-2" href="#">#dark blue</a></div>
+              </div>
+            </div>
+          </div>
+          <!-- Share product-->
+          <div class="py-4">
+            <span class="d-inline-block align-middle font-size-sm mr-3 mb-2">Share product:</span>
+            <a class="social-btn sb-instagram mr-2 mb-2" href="#"><i class="flaticon-instagram"></i></a>
+            <a class="social-btn sb-facebook mr-2 mb-2" href="#"><i class="flaticon-facebook"></i></a>
+            <a class="social-btn sb-twitter mr-2 mb-2" href="#"><i class="flaticon-twitter"></i></a>
+            <a class="social-btn sb-pinterest mr-2 mb-2" href="#"><i class="flaticon-pinterest"></i></a>
+          </div>
+          <!-- Prev / Next product-->
+          <nav class="entry-navigation">
+            <a class="entry-navigation-link" href="#" data-toggle="popover" data-placement="top" data-trigger="hover" data-html="true" data-content="&lt;div class=&quot;media align-items-center&quot;&gt;&lt;img src=&quot;{% static 'dist/img/shop/widget/10.jpg' %}&quot; width=&quot;64&quot; class=&quot;mr-3&quot; alt=&quot;Product thumb&quot;&gt;&lt;div class=&quot;media-body&quot;&gt;&lt;h6  class=&quot;font-size-sm font-weight-semibold mb-0&quot;&gt;Adidas Performance Hat&lt;/h6&gt;&lt;span class=&quot;d-block font-size-xs text-muted&quot;&gt;$19.00&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;"><i class="mr-1" data-feather="chevron-left"></i>Prev <span class='d-none d-sm-inline'>product</span></a>
+            <a class="entry-navigation-link" href="#" data-toggle="popover" data-placement="top" data-trigger="hover" data-html="true" data-content="&lt;div class=&quot;media align-items-center&quot;&gt;&lt;img src=&quot;{% static 'dist/img/shop/widget/08.jpg' %}&quot; width=&quot;64&quot; class=&quot;mr-3&quot; alt=&quot;Product thumb&quot;&gt;&lt;div class=&quot;media-body&quot;&gt;&lt;h6  class=&quot;font-size-sm font-weight-semibold mb-0&quot;&gt;The North Face Hoodie&lt;/h6&gt;&lt;span class=&quot;d-block font-size-xs text-muted&quot;&gt;$134.00&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;">Next <span class='d-none d-sm-inline'>product</span><i class="ml-1" data-feather="chevron-right"></i>
+            </a>
+          </nav>
+          <!-- Related products (visible md and down)-->
+          <div class="d-lg-none">
+            <h2 class="h3 pt-5 pb-3">You may also like</h2>
+            <div class="owl-carousel" data-owl-carousel="{ &quot;nav&quot;: false, &quot;dots&quot;: true, &quot;loop&quot;: true, &quot;margin&quot;: 15, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1},&quot;360&quot;:{&quot;items&quot;:2}, &quot;630&quot;:{&quot;items&quot;:3}} }">
+              <div class="product-card">
+                <div class="product-thumb box-shadow-0"><a class="product-thumb-link" href="#"></a><span class="product-wishlist-btn" data-toggle="tooltip" data-placement="left" title="Add to wishlist"><i data-feather="heart"></i></span><img src="{% static 'dist/img/shop/apparel/03.jpg' %}" alt="Product"></div>
+                <div class="product-card-body box-shadow-0 text-center"><a class="product-meta" href="#">Men's shoes</a>
+                  <h3 class="product-card-title"><a href="#">Calvin Klein Jeans Keds</a></h3><span class="text-primary">$125.00</span>
+                </div>
+              </div>
+              <div class="product-card">
+                <div class="product-thumb box-shadow-0"><a class="product-thumb-link" href="#"></a><span class="badge badge-danger rounded-0">Sale -10%</span><span class="product-wishlist-btn" data-toggle="tooltip" data-placement="left" title="Add to wishlist"><i data-feather="heart"></i></span><img src="{% static 'dist/img/shop/apparel/08.jpg' %}" alt="Product"></div>
+                <div class="product-card-body box-shadow-0 text-center"><a class="product-meta" href="#">Women's sneakers</a>
+                  <h3 class="product-card-title"><a href="#">Reebok Classic Sneakers</a></h3><span class="text-primary">
+                    <del class="text-muted mr-1">$105.00</del>$94.50</span>
+                </div>
+              </div>
+              <div class="product-card">
+                <div class="product-thumb box-shadow-0"><a class="product-thumb-link" href="#"></a><span class="product-wishlist-btn" data-toggle="tooltip" data-placement="left" title="Add to wishlist"><i data-feather="heart"></i></span><img src="{% static 'dist/img/shop/apparel/10.jpg' %}" alt="Product"></div>
+                <div class="product-card-body box-shadow-0 text-center"><a class="product-meta" href="#">Men's sandals</a>
+                  <h3 class="product-card-title"><a href="#">Big Star Flip Tops</a></h3><span class="text-primary">$10.60</span>
+                </div>
+              </div>
+              <div class="product-card">
+                <div class="product-thumb box-shadow-0"><a class="product-thumb-link" href="#"></a><span class="product-wishlist-btn" data-toggle="tooltip" data-placement="left" title="Add to wishlist"><i data-feather="heart"></i></span><img src="{% static 'dist/img/shop/apparel/01.jpg' %}" alt="Product"></div>
+                <div class="product-card-body box-shadow-0 text-center"><a class="product-meta" href="#">Men's jeans</a>
+                  <h3 class="product-card-title"><a href="#">Gues Slim Fit Jeans</a></h3><span class="text-primary">$124.99</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    {% include 'products/product_reviews.html' %}
+    <hr class="mb-5">
+    {% include 'products/product_related.html' %}
+
+{% endblock content %}

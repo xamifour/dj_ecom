@@ -1,0 +1,54 @@
+  <div class="container">
+    <h2 class="h4 pb-4 font-weight-semibold">Active products</h2>
+    <div class="row n/o-gutters">
+      <!-- Product-->
+      {% for item in object_list %}
+      <div class="c/ol-lg-2 c/ol-md-4 col-sm-2">
+        <div class="product-card mb-4">
+        <div class="product-thumb"><a class="product-thumb-link" href="{{ item.get_absolute_url }}"></a>
+          {% if item.get_discount %}
+          <span class="badge badge-danger rounded-0">{{ item.get_discount }}</span>
+          {% endif %}
+          <span class="product-wishlist-btn" data-toggle="tooltip" data-placement="left" title="Add to wishlist"><i data-feather="heart"></i></span><img src="{{ item.img1.url }}" alt="Product">
+        </div>
+        <div class="product-card-body text-center">
+          {% if item.sub_category %}<a class="product-meta" href="{{ item.get_absolute_url }}">{{item.get_sub_category}}</a>{% endif %}
+          <h3 class="product-card-title"><a href="{{ item.get_absolute_url }}">{{item.title}}</a></h3>
+          <h2 class="h5 font-weight-light p/t-3 pb-2">
+            {% if item.get_discount %}
+              <del class="lead text-muted mr-2">${{ item.get_price }}</del><span class="text-primary">${{ item.get_discounted_price }}</span>
+            {% else %}
+              ${{ item.get_price }}
+            {% endif %}
+          </h2>
+        </div>
+        <div class="product-card-body body-hidden">
+          <div class="pb-2 text-center">
+            <div class="custom-control custom-option custom-control-inline mb-2">
+              <input class="custom-control-input" type="radio" name="size-5" id="s-5-95">
+              <label class="custom-option-label" for="s-5-95">9.5</label>
+            </div>
+            <div class="custom-control custom-option custom-control-inline mb-2">
+              <input class="custom-control-input" type="radio" name="size-5" id="s-5-9" checked>
+              <label class="custom-option-label" for="s-5-9">9</label>
+            </div>
+            <div class="custom-control custom-option custom-control-inline mb-2">
+              <input class="custom-control-input" type="radio" name="size-5" id="s-5-85">
+              <label class="custom-option-label" for="s-5-85">8.5</label>
+            </div>
+            <div class="custom-control custom-option custom-control-inline mb-2">
+              <input class="custom-control-input" type="radio" name="size-5" id="s-5-8">
+              <label class="custom-option-label" for="s-5-8">8</label>
+            </div>
+            <div class="custom-control custom-option custom-control-inline mb-2">
+              <input class="custom-control-input" type="radio" name="size-5" id="s-5-75">
+              <label class="custom-option-label" for="s-5-75">7.5</label>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-sm btn-block" type="button" data-toggle="toast" data-target="#cart-toast">Add to cart</button><a class="quick-view-btn" href="#quick-view" data-toggle="modal"><i class="mr-1" data-feather="eye"></i>Quick view</a>
+        </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>

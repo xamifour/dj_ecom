@@ -1,0 +1,38 @@
+
+By connecting to the postgres database, you are automatically disconnected from the db database.
+\connect postgres
+
+CREATE DATABASE database-name;
+CREATE DATABASE mydb;
+
+Rename existing database
+ALTER DATABASE exiting-database-name RENAME TO new-database-name;
+ALTER DATABASE mydb RENAME TO yourdb;
+
+Create table and insert data
+create table candidates (
+    candidate_id int generated always as identity,
+    first_name varchar(100) not null,
+    last_name varchar(100) not null,
+    email varchar(255) not null unique,
+    phone varchar(25) not null,
+    primary key(candidate_id)
+);
+INSERT INTO candidates(first_name, last_name, email, phone)
+VALUES('Joe','Com','joe.com@example.com','408-111-2222');
+
+
+Selecting all entries in a table called products_product
+SELECT * from products_product;
+
+create use joe with password mypassword
+CREATE USER joe WITH PASSWORD 'mypassword';
+
+grant INSERT, UPDATE, and DELETE privileges on the candidates table to the role joe:
+GRANT INSERT, UPDATE, DELETE ON candidates TO joe;
+
+The following statement grants all privileges on all tables in the public schema of the dvdrental sample database to the role joe:
+GRANT ALL ON ALL TABLES IN SCHEMA "public" TO joe;
+
+grants all privileges on a database to a user
+GRANT ALL PRIVILEGES ON DATABASE mydb TO joe;

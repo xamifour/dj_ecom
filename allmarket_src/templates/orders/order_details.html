@@ -1,0 +1,53 @@
+{% extends "profiles/profile_layout.html" %}
+{% block head_title %}Order: {{ object.get_order_id }} Details | {{ block.super }}{% endblock head_title %}
+
+
+{% load crispy_forms_tags %}
+
+{% block activity %}
+{% if request.user.is_authenticated %}
+<div class="">
+<div class="">
+<div class='c/ol-12 c/ol-md-6 mx-auto'>
+    <h4 class="display-7 text-muted font-weight-semibold">Order with ID: {{ object.get_order_id }}</h4>
+    <hr class="mb-3">
+</div>
+</div>
+<div class="">
+<div class="">
+	<p>Items: {% for item in order.items.all %}{{ item }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+	<p>Shipping Address: {{ object.shipping_address }}</p>
+	<p>Billing Address: {{ object.billing_address }}</p>
+	<p>Subtotal: {{ object.get_order_subtotal }}</p>
+	<p>Shipping Total: {{ object.shipping_total }}</p>
+	<p>Order Total: {{ object.get_order_total }}</p>
+	<p>Order Date: {{ object.ordered_date }}</p>
+	<p>Order Status: {{ object.get_order_status }}</p>
+</div>
+</div>
+
+{% if not order.being_delivered %}
+<h4 class="h3 my-4" style="font-weight:500;">Order Received Form</h4>     
+  <div class="">
+    <form action="" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{form|crispy}}
+      {% if order %}
+        <button type="submit" class="btn btn-warning">Save Changes</button>
+      {% else %}
+        <button type="submit" class="btn btn-success">Submit</button>
+      {% endif %}
+        <a href="{% url 'orders:orderList' %}" class="btn btn-outline-secondary" role="button">Nevermind</a>
+    </form>
+  </div>
+{% endif %}
+
+</div>
+{% endif %}
+{% endblock %}  
+
+
+
+
+{% block javascript %}
+{% endblock javascript %}

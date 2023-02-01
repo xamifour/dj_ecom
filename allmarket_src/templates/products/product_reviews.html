@@ -1,0 +1,100 @@
+{% load static %}
+
+<!-- Leave a Review-->
+{% include 'products/product_review_form.html' %}
+<div class="container pt-5 pb-1 pb-md-4" id="reviews" data-offset-top="-5">
+  <div class="row pt-sm-3">
+    <div class="col-md-4 pb-5">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex justify-content-center align-items-end pt-2 pb-4">
+            <div class="display-4 mr-2">4.3</div>
+            <div>
+              <div class="text-muted font-size-xs mb-n1">based on 295 reviews</div>
+              <div class="star-rating"><i class="sr-star active" data-feather="star"></i><i class="sr-star active" data-feather="star"></i><i class="sr-star active" data-feather="star"></i><i class="sr-star active" data-feather="star"></i><i class="sr-star" data-feather="star"></i>
+              </div>
+            </div>
+          </div>
+          <div class="font-size-sm font-weight-semibold mb-2">5 stars - <span class="text-muted">177</span></div>
+          <div class="progress mb-3" style="height: 2px;">
+            <div class="progress-bar bg-warning" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          <div class="font-size-sm font-weight-semibold mb-2">4 stars - <span class="text-muted">88</span></div>
+          <div class="progress mb-3" style="height: 2px;">
+            <div class="progress-bar bg-warning" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          <div class="font-size-sm font-weight-semibold mb-2">3 stars - <span class="text-muted">20</span></div>
+          <div class="progress mb-3" style="height: 2px;">
+            <div class="progress-bar bg-warning" role="progressbar" style="width: 8%" aria-valuenow="8" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          <div class="font-size-sm font-weight-semibold mb-2">2 stars - <span class="text-muted">9</span></div>
+          <div class="progress mb-3" style="height: 2px;">
+            <div class="progress-bar bg-warning" role="progressbar" style="width: 3%" aria-valuenow="3" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          <div class="font-size-sm font-weight-semibold mb-2">1 star - <span class="text-muted">0</span></div>
+          <div class="progress mb-3" style="height: 2px;">
+            <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          {% if request.user.is_authenticated %}
+            <div class="py-2"><a class="btn btn-warning btn-block" href="#leaveReview" data-toggle="modal">Leave a review</a></div>
+          {% else %}
+            <div class="py-2"><a class="btn btn-warning btn-block" href="{% url 'account_login' %}">Sign in to submit a review</a></div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8 pb-5">
+      <h2 class="h3">Latest reviews</h2>
+
+      <!-- Review-->
+      {% for review in product_reviews %}
+      <div class="blockquote comment border-top-0 border-left-0 border-right-0 px-0 pt-0">
+        <div class="d-sm-flex align-items-center pb-2">
+          <h6 class="mb-0">{{review.review_subject}}</h6><span class="d-none d-sm-inline mx-2 text-muted opacity-50">|</span>
+          <div class="star-rating">
+            {{review.review_rating}}
+          </div>
+        </div>
+        <p>{{review.review_comment}}</p>
+        <div class="media align-items-center mb-2"><img class="mr-3" src="{% static 'dist/img/testimonials/01.jpg' %}" width="50" alt="Author ava">
+          <div class="media-body">
+            <h6 class="font-size-sm mb-0">{{review.user}}</h6><span class="d-block font-size-sm text-muted">{{review.created_time}}</span>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+        <p class="text-muted font-italic mb-0">No comment on this product yet. Go ahead and <a href="{% url 'products:productReviewCreate' object.slug %}">add the first comment</a>.</p>    
+      {% endfor %}
+
+      <!-- Review
+      <div class="blockquote comment border-top-0 border-left-0 border-right-0 px-0 pt-0">
+        <div class="d-sm-flex align-items-center pb-2">
+          <h6 class="mb-0">My husband love his new toy</h6><span class="d-none d-sm-inline mx-2 text-muted opacity-50">|</span>
+          <div class="star-rating"><i class="sr-star active" data-feather="star"></i><i class="sr-star active" data-feather="star"></i><i class="sr-star active" data-feather="star"></i><i class="sr-star active" data-feather="star"></i><i class="sr-star" data-feather="star"></i>
+          </div>
+        </div>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse...</p>
+        <div class="media align-items-center mb-2"><img class="mr-3" src="{% static 'dist/img/testimonials/03.jpg' %}" width="50" alt="Author ava">
+          <div class="media-body">
+            <h6 class="font-size-sm mb-0">Barbara Palson</h6><span class="d-block font-size-sm text-muted">May 17, 2019</span>
+          </div>
+        </div>
+      </div>
+      <div class="blockquote comment border-top-0 border-left-0 border-right-0 px-0 pt-0">
+        <div class="d-sm-flex align-items-center pb-2">
+          <h6 class="mb-0">Great quality and fast delivery</h6><span class="d-none d-sm-inline mx-2 text-muted opacity-50">|</span>
+          <div class="star-rating"><i class="sr-star active" data-feather="star"></i><i class="sr-star active" data-feather="star"></i><i class="sr-star active" data-feather="star"></i><i class="sr-star active" data-feather="star"></i><i class="sr-star active" data-feather="star"></i>
+          </div>
+        </div>
+        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur...</p>
+        <div class="media align-items-center mb-2"><img class="mr-3" src="{% static 'dist/img/testimonials/02.jpg' %}" width="50" alt="Author ava">
+          <div class="media-body">
+            <h6 class="font-size-sm mb-0">Deniel Adams</h6><span class="d-block font-size-sm text-muted">April 13, 2019</span>
+          </div>
+        </div>
+      </div>-->
+      <!-- Pagination-->
+      {% include 'includes/pagination.html' %}
+    </div>
+  </div>
+</div>

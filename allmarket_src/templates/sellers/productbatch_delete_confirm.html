@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block head_title %} Product Batch | {{ block.super }}{% endblock head_title %}
+
+{% block page_title %}
+Delete Product Batch < {{ productbatch.title }} >
+{% endblock page_title %}
+
+{% block breadcumb %}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'sellers:productbatch_details' seller.pk productbatch.pk %}">{{ productbatch.seller }}</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'sellers:productbatch_details' seller.pk productbatch.pk %}">{{ productbatch.title }}</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Confirm deletion</li>
+    </ol>
+  </nav>
+{% endblock breadcumb %}
+
+{% block content %}   
+  <h2 class="mb-3">Confirm deletion</h2>
+  <p class="lead">Are you sure you want to delete the product batch <strong>"{{ productbatch.title }}"</strong>? There is no going back.</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger btn-lg">Yes, I'm sure</button>
+    <a href="{% url 'sellers:productbatch_details' seller.pk productbatch.pk %}" class="btn btn-outline-secondary btn-lg" role="button">Nevermind</a>
+  </form>
+{% endblock content %}

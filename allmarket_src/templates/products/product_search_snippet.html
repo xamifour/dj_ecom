@@ -1,0 +1,34 @@
+<div class='table-responsive product-search'>
+  <table class="table">
+    <tbody class="">
+      {% for item in object_list %}
+      <tr class="">
+        <td class="" style="width:180px; height: 160px;">
+          <a href="{{ item.get_absolute_url }}">
+            <img src="{{ item.img1.url }}" alt="product image" class="search-img rounded mx-auto img-fluid">
+          </a>
+        </td>     
+        <td class="">
+          <div class="">
+            <h1 class="pt-1 h5" style="font-weight: 400;">{{ item.title_and_description|truncatechars:140 }}</h1>
+            <small class="">Condition: {{ item.condition }}</small>
+            <span class="mx-2">
+              {% if item.sub_category %}
+                <small class="">Category: {{item.get_sub_category}}</small>
+              {% endif %}
+            </span>  
+            <span><a href="" style="float: right !important;"><i class="" data-feather="share"></i></a></span>
+            <div class="text-primary">
+              {% if not item.get_discount %}
+                <h3 class="h4" style="font-weight: 600;">${{item.get_price}}</h3>
+              {% else %}
+                <h3 class="h4" style="font-weight: 600;"><del class="text-muted mr-1">${{item.get_price}}</del>${{item.get_discounted_price}}</h3>
+              {% endif %}
+            </div> 
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>               
+  </table>
+</div>

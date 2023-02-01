@@ -1,0 +1,196 @@
+{% extends "layout.html" %}
+{% block head_title %} Checkout | {{ block.super }}{% endblock head_title %}
+
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% url 'profiles:userProfile' as user_profile_url %}
+
+
+{% block content %}
+  {% if request.user.is_authenticated %}
+    <!-- Page Title-->
+    <div class="page-title-wrapper" aria-label="Page title">
+      <div class="container">
+        <h1 class="p/age-title h3">Checkout</h1><span class="d-block mt-2 text-muted"></span>
+      </div>
+    </div>
+    <!-- Page Content-->
+    <div class="container pb-5 mb-sm-4 mt-n2 mt-md-n3">
+      <!-- Steps (wizard)-->
+      {% include 'orders/order_steps.html' %}
+      <div class="row pt-4 mt-2">
+        <!-- Content-->
+        <div class="col-xl-9 col-md-8">
+          <div class="d-sm-flex justify-content-between bg-secondary px-4 py-3 mb-4">
+            <div class="media"><img class="img-thumbnail rounded-circle mr-3" src="{% static 'dist/img/account/customer.jpg' %}" width="95" alt="Daniel Adams">
+              <div class="media-body align-self-center">
+                <h6 class="mb-1">{{user|capfirst}}</h6>
+                <div class="font-size-sm"><span class="text-warning">{{user.email}}</span></div>
+                <div class="font-size-sm opacity-75"><span class="mr-1">Reward points:</span><span class="font-weight-semibold">586</span></div>
+              </div>
+            </div>
+            <div class="pt-3 pl-sm-2 text-right"><a class="btn btn-light btn-sm" href="{% url 'profiles:userProfile' %}"><i class="mr-2" data-feather="edit"></i>Edit profile</a></div>
+          </div>
+
+          <div class="fadeIn">
+            <div class="row">
+              <div class="col-md-8 mb-4">
+                <div class="card">
+                  <div  class="card-body">
+                  <form method="POST">
+                    {% csrf_token %}
+                    <h3 class="h5">Shipping address</h3>
+                    <div class='hideable_shipping_form'>
+                      <div class="md-form mb-3">
+                        <label for="shipping_address" class="">Address</label>
+                        <input type='text' placeholder='1234 Main St' id='shipping_address' name='shipping_address' class='form-control' />
+                      </div>
+                      <div class="md-form">
+                        <label for="shipping_address2" class="">Address 2 (optional)</label>
+                        <input type='text' placeholder='Apartment or suite' id='shipping_address2' name='shipping_address2' class='form-control' />
+                      </div>
+                      <div class="row my-3">
+                        <div class="col-lg-4 col-md-12">
+                          <label for="country">Country</label>
+                          {{ form.shipping_country }}
+                          <div class="invalid-feedback">
+                            Please select a valid country.
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                          <label for="shipping_zip">Zip</label>
+                          <input type='text' placeholder='Zip code' id='shipping_zip' name='shipping_zip' class='form-control' />
+                          <div class="invalid-feedback">
+                            Zip code required.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="same_billing_address" id="same_billing_address">
+                        <label class="custom-control-label" for="same_billing_address">Billing address is the same as my shipping address</label>
+                      </div>
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="set_default_shipping" id="set_default_shipping">
+                        <label class="custom-control-label" for="set_default_shipping">Save as default shipping address</label>
+                      </div>
+                    </div>
+                    {% if default_shipping_address %}
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" class="custom-control-input" name="use_default_shipping" id="use_default_shipping">
+                      <label class="custom-control-label" for="use_default_shipping">Use default shipping address: {{ default_shipping_address.street_address|truncatechars:10 }}</label>
+                    </div>
+                    {% endif %}
+                    <hr class="my-4">
+                    <h3 class="h5">Billing address</h3>
+                    <div class='hideable_billing_form'>
+                      <div class="md-form mb-3">
+                        <label for="billing_address" class="">Address</label>
+                        <input type='text' placeholder='1234 Main St' id='billing_address' name='billing_address' class='form-control' />
+                      </div>
+                      <div class="md-form">
+                        <label for="billing_address2" class="">Address 2 (optional)</label>
+                        <input type='text' placeholder='Apartment or suite' id='billing_address2' name='billing_address2' class='form-control' />
+                      </div>
+                      <div class="row my-3">
+                        <div class="col-lg-4 col-md-12">
+                          <label for="country">Country</label>
+                          {{ form.billing_country }}
+                          <div class="invalid-feedback">
+                            Please select a valid country.
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                          <label for="billing_zip">Zip</label>
+                          <input type='text' placeholder='Zip code' id='billing_zip' name='billing_zip' class='form-control' />
+                          <div class="invalid-feedback">
+                            Zip code required.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="set_default_billing" id="set_default_billing">
+                        <label class="custom-control-label" for="set_default_billing">Save as default billing address</label>
+                      </div>
+                    </div>
+                    {% if default_billing_address %}
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" class="custom-control-input" name="use_default_billing" id="use_default_billing">
+                      <label class="custom-control-label" for="use_default_billing">Use default billing address: {{ default_billing_address.street_address|truncatechars:10 }}</label>
+                    </div>
+                    {% endif %}
+                    <hr class="my-3">
+                    <h3 class="h5 mt-3">Payment option</h3>
+                    <div class="d-block my-3">
+                      {% for value, name in form.fields.payment_option.choices %}
+                      <div class="custom-control custom-radio">
+                        <input id="{{ name }}" name="payment_option" value="{{ value }}" type="radio" class="custom-control-input" required>
+                        <label class="custom-control-label" for="{{ name }}">{{ name }}</label>
+                      </div>
+                      {% endfor %}
+                    </div>
+                    <hr class="mb-4">
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+                  </form>
+                </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-4">
+                {% include "orders/order_items_summary.html" %}
+              </div>
+            </div>
+          </div>
+
+          <!-- Navigation-->
+          <div class="d-flex pt-4 col-md-6">
+            <div class="w-50 pr-3"><a class="btn btn-outline-secondary btn-block" href="{% url 'orders:orderSummary' %}"><i class="mr-1" data-feather="chevron-left"></i><span class="d-none d-sm-inline">Back to cart</span><span class="d-inline d-sm-none">Back</span></a></div>
+            <div class="w-50 pl-2"><a class="btn btn-primary btn-block" href="#"><span class="d-none d-sm-inline">Proceed to shipping</span><span class="d-inline d-sm-none">Next</span><i class="ml-1" data-feather="chevron-right"></i></a></div>
+          </div>
+        </div>
+
+        <!-- Sidebar-->
+        <div class="col-xl-3 col-md-4 pt-4 mt-3 pt-md-0 mt-md-0">
+          {% include 'orders/order_items_summary_total.html' %}
+          <!-- Promo banner-->
+          <a class="d-block text-decoration-0 mt-4 mx-auto pt-2" href="#" style="max-width: 277px;">
+            <div class="bg-secondary">
+              <div class="px-3 pt-4 text-center">
+                <h4 class="font-size-sm font-weight-normal pt-1 mb-2">2019 Spring / Summer</h4>
+                <h4 class="h5 pb-2">Hoodie Collection</h4>
+                <div class="btn btn-primary btn-sm">Shop now</div>
+              </div><img src="{% static 'dist/img/shop/banner01.jpg' %}" alt="Promo banner">
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  {% endif %}  
+{% endblock content %}
+
+
+{% block javascript %}
+<script>
+var hideable_shipping_form = $('.hideable_shipping_form');
+var hideable_billing_form = $('.hideable_billing_form');
+
+var use_default_shipping = document.querySelector("input[name=use_default_shipping]");
+var use_default_billing = document.querySelector("input[name=use_default_billing]");
+
+use_default_shipping.addEventListener('change', function() {
+  if (this.checked) {
+    hideable_shipping_form.hide();
+  } else {
+    hideable_shipping_form.show();
+  }
+})
+
+use_default_billing.addEventListener('change', function() {
+  if (this.checked) {
+    hideable_billing_form.hide();
+  } else {
+    hideable_billing_form.show();
+  }
+})
+</script>
+{% endblock javascript %}

@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block head_title %} Checkout Complete | {{ block.super }}{% endblock head_title %}
+
+
+{% block content %}
+
+  {% if request.user.is_authenticated %}
+  <div class="container pb-5 mb-sm-4">
+    <div class="pt-5">
+      <div class="card py-3 mt-sm-3">
+        <div class="card-body text-center">
+          <h3 class="h4 pb-3">Thank you for your order!</h3>
+          <p class="mb-2">Your order has been placed and will be processed as soon as possible.</p>
+          <p class="mb-2">Make sure you make note of your order number, which is <strong>" {{order.get_order_id}} ".</strong></p>
+          <p>You will be receiving an email shortly with confirmation of your order. <u>You can now:</u></p><a class="btn btn-secondary mt-3 mr-3" href="/">Go back shopping</a><a class="btn btn-primary mt-3" href="{% url 'orders:orderList' %}"><i data-feather="map-pin"></i>&nbsp;Track order</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  
+{% endblock content %}

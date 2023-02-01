@@ -1,0 +1,242 @@
+{% extends "layout.html" %}
+{% block head_title %} Home | {{ block.super }}{% endblock head_title %}
+
+{% load static %}
+
+{% block content %}
+
+{% url 'products:productQuery' as product_query_url %}
+  
+  <!-- Page Content-->
+  <!-- Hero slider-->
+  <section class="container-fluid bg-secondary px-0 border-bottom">
+    {% for display in display_images %}
+    <div class="row no-gutters align-items-center">
+      <div class="col-md-6">
+        <div class="mx-auto bg-light my-sm-4" style="max-width: 37rem;">
+          <div class="owl-carousel trigger-carousel" data-owl-carousel="{ &quot;nav&quot;: true, &quot;dots&quot;: false, &quot;loop&quot;: true, &quot;autoHeight&quot;: true }" data-target-carousel="#target-carousel">
+            {% if display.slider1a %}
+            <div class="py-5 px-3 px-sm-5"><img class="d-block mb-2" src="{{ display.slider1a.url }}" width="180" alt="Reebok">
+              <h2 class="mb-1">Sneakers Classic Collection</h2>
+              <h3 class="font-weight-light opacity-70 pb-3">starting at $105.99</h3><a class="btn btn-primary" href="#">Shop now<i class="ml-2" data-feather="arrow-right"></i></a>
+            </div>
+            {% endif %}
+            {% if display.slider2a %}
+            <div class="py-5 px-3 px-sm-5"><img class="d-block mb-2" src="{{ display.slider2a.url }}" width="129" alt="The North Face">
+              <h2 class="mb-1">Gaming Computers</h2>
+              <h3 class="font-weight-light opacity-70 pb-3">starting at $889.00</h3><a class="btn btn-primary" href="#">Shop now<i class="ml-2" data-feather="arrow-right"></i></a>
+            </div>
+            {% endif %}
+            {% if display.slider3a %}
+            <div class="py-5 px-3 px-sm-5"><img class="d-block mb-2" src="{{ display.slider3a.url }}" width="182" alt="Calvin Klein">
+              <h2 class="mb-1">8K Talevision</h2>
+              <h3 class="font-weight-light opacity-70 pb-3">starting at $1,116.99</h3><a class="btn btn-primary" href="#">Shop now<i class="ml-2" data-feather="arrow-right"></i></a>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="owl-carousel" id="target-carousel" data-owl-carousel="{ &quot;nav&quot;: false, &quot;dots&quot;: false, &quot;loop&quot;: true, &quot;mouseDrag&quot;: false, &quot;touchDrag&quot;: false, &quot;pullDrag&quot;: false, &quot;animateOut&quot;: &quot;fadeOut&quot; }">
+          {% if display.slider1 %}<img class="ml-auto mr-0" src="{{ display.slider1.url }}" alt="Sneakers Collection">{% endif %}
+          {% if display.slider2 %}<img class="ml-auto mr-0" src="{{ display.slider2.url }}" alt="Hoodie Collection">{% endif %}
+          {% if display.slider3 %}<img class="ml-auto mr-0" src="{{ display.slider3.url }}" alt="Sunglasses Collection">{% endif %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </section>
+  <!-- Popular categories (carousel)-->
+  <section class="container py-5 mt-3">
+    <h2 class="h3 pb-4 font-weight-semibold">Popular categories</h2>
+    <div class="owl-carousel" data-owl-carousel="{ &quot;nav&quot;: false, &quot;dots&quot;: true, &quot;margin&quot;: 30, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1},&quot;460&quot;:{&quot;items&quot;:2}, &quot;768&quot;:{&quot;items&quot;:3}} }">
+      <div class="card border-0"><a class="card-img-tiles" href="{{product_query_url}}">
+          <div class="main-img"><img src="{% static '/dist/img/shop/apparel/categories/01.jpg' %}" alt="Laptop"></div>
+          <div class="thumblist"><img src="{% static '/dist/img/shop/apparel/categories/02.jpg' %}" alt="Laptop"><img src="{% static '/dist/img/shop/apparel/categories/03.jpg' %}" alt="Laptop"></div></a>
+        <div class="card-body border mt-n1 py-4 text-center">
+          <h2 class="h5 mb-1">Laptop</h2><span class="d-block mb-3 font-size-xs text-muted">Starting from <span class='font-weight-semibold'>$549.99</span></span><a class="btn btn-pill btn-outline-primary btn-sm" href="#">Shop laptop</a>
+        </div>
+      </div>
+      <div class="card border-0"><a class="card-img-tiles" href="{{product_query_url}}">
+        <div class="main-img"><img src="{% static '/dist/img/shop/apparel/categories/04.jpg' %}" alt="Phone"></div>
+        <div class="thumblist"><img src="{% static '/dist/img/shop/apparel/categories/05.jpg' %}" alt="Phone"><img src="{% static '/dist/img/shop/apparel/categories/06.jpg' %}" alt="Phone"></div></a>
+        <div class="card-body border mt-n1 py-4 text-center">
+          <h2 class="h5 mb-1">Smart Phone</h2><span class="d-block mb-3 font-size-xs text-muted">Starting from <span class='font-weight-semibold'>$156.00</span></span><a class="btn btn-pill btn-outline-primary btn-sm" href="#">Shop Smart Phone</a>
+        </div>
+      </div>
+      <div class="card border-0"><a class="card-img-tiles" href="{{product_query_url}}">
+        <div class="main-img"><img src="{% static '/dist/img/shop/apparel/categories/07.jpg' %}" alt="Bags"></div>
+        <div class="thumblist"><img src="{% static '/dist/img/shop/apparel/categories/08.jpg' %}" alt="Bags"><img src="{% static '/dist/img/shop/apparel/categories/09.jpg' %}" alt="Bags"></div></a>
+        <div class="card-body border mt-n1 py-4 text-center">
+          <h2 class="h5 mb-1">Bags</h2><span class="d-block mb-3 font-size-xs text-muted">Starting from <span class='font-weight-semibold'>$27.00</span></span><a class="btn btn-pill btn-outline-primary btn-sm" href="#">Shop bags</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Brands carousel-->
+  <section class="container pb-4 mt-md-3">
+    <h2 class="h3 pb-4 font-weight-semibold">Shop by brand</h2>
+    <div class="owl-carousel" data-owl-carousel="{ &quot;nav&quot;: false, &quot;dots&quot;: true, &quot;loop&quot;: true, &quot;margin&quot;: 20, &quot;autoplay&quot;: true, &quot;autoplayTimeout&quot;: 4000, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:2, &quot;margin&quot;: 15},&quot;460&quot;:{&quot;items&quot;:3, &quot;margin&quot;: 15}, &quot;768&quot;:{&quot;items&quot;:4}} }">
+      <a class="d-block bg-white border py-3 py-sm-4" href="#"><img class="d-block mx-auto" src="{% static '/dist/img/shop/apparel/brands/01.png' %}" style="width: 150px;" alt="Brand"></a>
+      <a class="d-block bg-white border py-3 py-sm-4" href="#"><img class="d-block mx-auto" src="{% static '/dist/img/shop/apparel/brands/02.png' %}" style="width: 150px;" alt="Brand"></a>
+      <a class="d-block bg-white border py-3 py-sm-4" href="#"><img class="d-block mx-auto" src="{% static '/dist/img/shop/apparel/brands/03.png' %}" style="width: 150px;" alt="Brand"></a>
+      <a class="d-block bg-white border py-3 py-sm-4" href="#"><img class="d-block mx-auto" src="{% static '/dist/img/shop/apparel/brands/04.png' %}" style="width: 150px;" alt="Brand"></a>
+      <a class="d-block bg-white border py-3 py-sm-4" href="#"><img class="d-block mx-auto" src="{% static '/dist/img/shop/apparel/brands/05.png' %}" style="width: 150px;" alt="Brand"></a>
+      <a class="d-block bg-white border py-3 py-sm-4" href="#"><img class="d-block mx-auto" src="{% static '/dist/img/shop/apparel/brands/06.png' %}" style="width: 150px;" alt="Brand"></a>
+      <a class="d-block bg-white border py-3 py-sm-4" href="#"><img class="d-block mx-auto" src="{% static '/dist/img/shop/apparel/brands/07.png' %}" style="width: 150px;" alt="Brand"></a>
+      <a class="d-block bg-white border py-3 py-sm-4" href="#"><img class="d-block mx-auto" src="{% static '/dist/img/shop/apparel/brands/08.png' %}" style="width: 150px;" alt="Brand"></a>
+      <a class="d-block bg-white border py-3 py-sm-4" href="#"><img class="d-block mx-auto" src="{% static '/dist/img/shop/apparel/brands/09.png' %}" style="width: 150px;" alt="Brand"></a>
+      <a class="d-block bg-white border py-3 py-sm-4" href="#"><img class="d-block mx-auto" src="{% static '/dist/img/shop/apparel/brands/10.png' %}" style="width: 150px;" alt="Brand"></a>
+      <a class="d-block bg-white border py-3 py-sm-4" href="#"><img class="d-block mx-auto" src="{% static '/dist/img/shop/apparel/brands/11.png' %}" style="width: 150px;" alt="Brand"></a>
+      <a class="d-block bg-white border py-3 py-sm-4" href="#"><img class="d-block mx-auto" src="{% static '/dist/img/shop/apparel/brands/12.png' %}" style="width: 150px;" alt="Brand"></a>
+    </div>
+  </section>
+
+  <section>
+    {% include 'products/product_featured.html' %}
+  </section>
+
+  <!-- Product widgets-->
+  <section class="container pt-sm-3 pb-4 pb-md-5">
+    {% for display in display_images %}
+    <div class="row">
+      <div class="col-md-4 col-sm-6 d-block d-sm-none d-md-block mb-3">
+        <!-- Promo banner--><a class="d-block text-decoration-0 mx-auto" href="#" style="max-width: 24rem;">
+          <div class="bg-secondary">
+            <div class="px-3 pt-4 text-center">
+              <h4 class="font-size-sm font-weight-normal pt-1 mb-2">2021 Spring / Summer</h4>
+              <h4 class="h5 pb-2">Hoodie Collection</h4>
+              <div class="btn btn-primary btn-sm">Shop now</div>
+            </div><img src="{{ display.advertise1.url }}" alt="Promo banner">
+          </div></a>
+      </div>
+      <div class="col-md-4 col-sm-6 mb-2 py-3">
+        <div class="widget widget-featured-entries">
+          <h3 class="widget-title font-size-lg">Best sellers</h3>
+          <div class="media"><a class="featured-entry-thumb" href="#"><img src="{% static '/dist/img/shop/widget/01.jpg' %}" width="64" alt="Product thumb"></a>
+            <div class="media-body">
+              <h6 class="featured-entry-title"><a href="#">Keds - Kickstart Pom Pom</a></h6>
+              <p class="featured-entry-meta">$42.99</p>
+            </div>
+          </div>
+          <div class="media"><a class="featured-entry-thumb" href="#"><img src="{% static '/dist/img/shop/widget/02.jpg' %}" width="64" alt="Product thumb"></a>
+            <div class="media-body">
+              <h6 class="featured-entry-title"><a href="#">Nike - Brasilia Medium Backpack</a></h6>
+              <p class="featured-entry-meta">$27.99</p>
+            </div>
+          </div>
+          <div class="media"><a class="featured-entry-thumb" href="#"><img src="{% static '/dist/img/shop/widget/03.jpg' %}" width="64" alt="Product thumb"></a>
+            <div class="media-body">
+              <h6 class="featured-entry-title"><a href="#">Guess - GU7295</a></h6>
+              <p class="featured-entry-meta">$38.00</p>
+            </div>
+          </div>
+          <div class="media"><a class="featured-entry-thumb" href="#"><img src="{% static '/dist/img/shop/widget/11.jpg' %}" width="64" alt="Product thumb"></a>
+            <div class="media-body">
+              <h6 class="featured-entry-title"><a href="#">Adidas Originals Cap</a></h6>
+              <p class="featured-entry-meta">$35.00</p>
+            </div>
+          </div>
+          <div class="media"><a class="featured-entry-thumb" href="#"><img src="{% static '/dist/img/shop/widget/13.jpg' %}" width="64" alt="Product thumb"></a>
+            <div class="media-body">
+              <h6 class="featured-entry-title"><a href="#">Big Star Flip Tops</a></h6>
+              <p class="featured-entry-meta">$10.60</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6 mb-2 py-3">
+        <div class="widget widget-featured-entries">
+          <h3 class="widget-title font-size-lg">New arrivals</h3>
+          <div class="media"><a class="featured-entry-thumb" href="#"><img src="{% static '/dist/img/shop/widget/08.jpg' %}" width="64" alt="Product thumb"></a>
+            <div class="media-body">
+              <h6 class="featured-entry-title"><a href="#">The North Face Hoodie</a></h6>
+              <p class="featured-entry-meta">$134.00</p>
+            </div>
+          </div>
+          <div class="media"><a class="featured-entry-thumb" href="#"><img src="{% static '/dist/img/shop/widget/09.jpg' %}" width="64" alt="Product thumb"></a>
+            <div class="media-body">
+              <h6 class="featured-entry-title"><a href="#">Medicine Chameleon Sunglasses</a></h6>
+              <p class="featured-entry-meta">$47.00</p>
+            </div>
+          </div>
+          <div class="media"><a class="featured-entry-thumb" href="#"><img src="{% static '/dist/img/shop/widget/10.jpg' %}" width="64" alt="Product thumb"></a>
+            <div class="media-body">
+              <h6 class="featured-entry-title"><a href="#">Adidas Performance Hat</a></h6>
+              <p class="featured-entry-meta">$19.00</p>
+            </div>
+          </div>
+          <div class="media"><a class="featured-entry-thumb" href="#"><img src="{% static '/dist/img/shop/widget/07.jpg' %}" width="64" alt="Product thumb"></a>
+            <div class="media-body">
+              <h6 class="featured-entry-title"><a href="#">Calvin Klein Jeans Keds</a></h6>
+              <p class="featured-entry-meta">$125.00</p>
+            </div>
+          </div>
+          <div class="media"><a class="featured-entry-thumb" href="#"><img src="{% static '/dist/img/shop/widget/12.jpg' %}" width="64" alt="Product thumb"></a>
+            <div class="media-body">
+              <h6 class="featured-entry-title"><a href="#">Roxy Cotton Handbag</a></h6>
+              <p class="featured-entry-meta">$52.00</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </section>
+  <!-- Blog + Insta split section-->
+  <section class="container-fluid px-0 border-bottom">
+    <div class="row no-gutters">
+      <div class="col-md-6 py-5 px-4" style="background-color: #efefef;">
+        <div class="mx-auto py-3" style="max-width: 25rem;">
+          <h2 class="mb-1">Read the blog</h2>
+          <p class="opacity-75 pb-3">Latest fashion news and trends</p><a class="btn btn-outline-dark" href="#"><i class="mr-2" data-feather="book"></i>Go to blog</a>
+        </div>
+      </div>
+      <div class="col-md-6 bg-secondary py-5 px-4">
+        <div class="mx-auto py-3" style="max-width: 25rem;">
+          <h2 class="mb-1">Follow on Instagram</h2>
+          <p class="opacity-75 pb-3">#ShopWithMStore</p><a class="btn btn-dark" href="#"><i class="mr-2" data-feather="instagram"></i>Follow us</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {% include 'products/product_quickview.html' %}
+
+  <!-- Toast notifications-->
+  <div class="toast-container toast-bottom-center">
+    <div class="toast mb-3" id="cart-toast" data-delay="5000" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header bg-success text-white"><i class="mr-2" data-feather="check-circle" style="width: 1.25rem; height: 1.25rem;"></i><span class="font-weight-semibold mr-auto">Added to cart!</span>
+        <button class="close text-white ml-2 mb-1" type="button" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="toast-body">This item was added to your cart.</div>
+    </div>
+    <div class="toast mb-3" id="compare-toast" data-delay="5000" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header bg-info text-white"><i class="mr-2" data-feather="info" style="width: 1.25rem; height: 1.25rem;"></i><span class="font-weight-semibold mr-auto">Added to comparison!</span>
+        <button class="close text-white ml-2 mb-1" type="button" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="toast-body">This item was added to comparison table.</div>
+    </div>
+    <div class="toast mb-3" id="wishlist-toast" data-delay="5000" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header bg-info text-white"><i class="mr-2" data-feather="info" style="width: 1.25rem; height: 1.25rem;"></i><span class="font-weight-semibold mr-auto">Added to wishlist!</span>
+        <button class="close text-white ml-2 mb-1" type="button" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="toast-body">This item was added to your wishlist.</div>
+    </div>
+    <div class="toast mb-3" id="profile-toast" data-delay="5000" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header bg-success text-white"><i class="mr-2" data-feather="check-circle" style="width: 1.25rem; height: 1.25rem;"></i><span class="font-weight-semibold mr-auto">Updated!</span>
+        <button class="close text-white ml-2 mb-1" type="button" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="toast-body">Your profile info updated successfuly.</div>
+    </div>
+    <div class="toast mb-3" id="address-toast" data-delay="5000" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header bg-success text-white"><i class="mr-2" data-feather="check-circle" style="width: 1.25rem; height: 1.25rem;"></i><span class="font-weight-semibold mr-auto">Updated!</span>
+        <button class="close text-white ml-2 mb-1" type="button" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="toast-body">Your addresses info updated successfuly.</div>
+    </div>
+  </div>
+
+    
+{% endblock content %}

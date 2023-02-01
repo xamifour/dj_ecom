@@ -1,0 +1,335 @@
+{% load static %}
+
+
+{% url 'orders:orderList' as order_list_url %}
+{% url 'orders:refundRequestList' as order_refund_list_url %}
+{% url 'orders:refundRequestCreate' as order_refund_create_url %}
+{% url 'orders:orderReceivedCreate' as order_received_create_url %}
+
+{% url 'profiles:userWishlist' as user_wishlist_url %}
+{% url 'profiles:userProfile' as user_profile_url %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{% block head_title %} All Shops {% endblock head_title %}</title>
+    <!-- SEO Meta Tags-->
+    <meta name="description" content="MStore - Modern Bootstrap E-commerce Template">
+    <meta name="keywords" content="bootstrap, shop, e-commerce, market, modern, responsive,  business, mobile, bootstrap 4, html5, css3, jquery, js, gallery, slider, touch, creative, clean">
+    <meta name="author" content="Createx Studio">
+    <!-- Viewport-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon and Touch Icons-->
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="mask-icon" color="#111" href="safari-pinned-tab.svg">
+    <meta name="msapplication-TileColor" content="#111">
+    <meta name="theme-color" content="#ffffff">  
+
+<style type="text/css">
+  /* Services Section
+--------------------------------*/
+
+.box {
+  padding: 40px;
+  box-shadow: 10px 10px 15px rgba(73, 78, 92, 0.1);
+  background: #fff;
+  transition: 0.4s;
+  height: 100%;
+}
+.box:hover {
+  box-shadow: 0px 0px 30px rgba(73, 78, 92, 0.15);
+  transform: translateY(-10px);
+  -webkit-transform: translateY(-10px);
+  -moz-transform: translateY(-10px);
+}
+.box .icon {
+  float: left;
+}
+.box .icon i {
+  color: #444;
+  font-size: 64px;
+  transition: 0.5s;
+  line-height: 0;
+  margin-top: 34px;
+}
+.box .icon i:before {
+  background: #0c2e8a;
+  background: linear-gradient(45deg, #50d8af 0%, #a3ebd5 100%);
+  background-clip: border-box;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.box h4 {
+  margin-left: 100px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  font-size: 22px;
+}
+.box h4 a {
+  color: #444;
+}
+.box p {
+  font-size: 14px;
+  margin-left: 100px;
+  margin-bottom: 0;
+  line-height: 24px;
+}
+@media (max-width: 767px) {
+  .box .box {
+    margin-bottom: 20px;
+  }
+  .box .icon {
+    float: none;
+    text-align: center;
+    padding-bottom: 15px;
+  }
+  .box h4, .box p {
+    margin-left: 0;
+    text-align: center;
+  }
+}
+
+
+</style>
+
+    {% include 'snippets/css.html' %}  
+
+    {% block extrahead %}{% endblock extrahead %}<!-- Page Specific head element goes HERE -->     
+    
+  </head>
+  <body>
+
+    {% include 'snippets/preloader.html' %}    
+    {% include 'includes/header.html' %}
+
+    {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+          {% if message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}Important: {% endif %}
+          {{ message }}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        {% endfor %}
+    {% endif %}
+
+
+    {% if request.user.is_authenticated %}
+
+    <!-- Open Ticket Modal-->
+    <form class="needs-validation modal fade" method="post" id="open-ticket" tabindex="-1" novalidate>
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Submit new ticket</h4>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="modal-body">
+            <p class="text-muted">We normally respond tickets within 2 business days.</p>
+            <div class="form-group">
+              <label for="ticket-subject">Subject</label>
+              <input class="form-control" type="text" id="ticket-subject" required>
+              <div class="invalid-feedback">Please fill in the subject line!</div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="ticket-type">Type</label>
+                  <select class="form-control custom-select" id="ticket-type" required>
+                    <option value>Choose type</option>
+                    <option value="Website problem">Website problem</option>
+                    <option value="Partner request">Partner request</option>
+                    <option value="Complaint">Complaint</option>
+                    <option value="Info inquiry">Info inquiry</option>
+                  </select>
+                  <div class="invalid-feedback">Please choose ticket type!</div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="ticket-priority">Priority</label>
+                  <select class="form-control custom-select" id="ticket-priority" required>
+                    <option value>How urgent is your issue?</option>
+                    <option value="Urgent">Urgent</option>
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
+                  </select>
+                  <div class="invalid-feedback">Please choose how urgent your ticket is!</div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="ticket-description">Describe your issue</label>
+              <textarea class="form-control" id="ticket-description" rows="8" required></textarea>
+              <div class="invalid-feedback">Please provide ticket description!</div>
+            </div>
+            <div class="custom-file mb-3">
+              <input class="custom-file-input" type="file" id="file-input">
+              <label class="custom-file-label" for="file-input">Choose file...</label>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary" type="submit">Submit Ticket</button>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <div class="" id="UserDashboard">  
+      <!-- Page Title-->
+      <div class="page-title-wrapper" aria-label="Page title">
+        <div class="container">
+          <h3>My Dashboard</h3>
+          <hr class="mt-2">
+        </div>
+      </div>
+
+      <div class="container pb-5 mb-4">
+        <div class="row">
+          <div class="col-lg-3"><!-- sidebar -->
+            <div class="offcanvas-sidebar">
+              <div class="offcanvas-sidebar-toggle"><span class="toggle-knob"><i data-feather="chevrons-right"></i>Sidebar</span></div>
+              <div class="offcanvas-sidebar-body">
+                <div class="offcanvas-sidebar-body-inner">
+                  <!-- Categories-->
+                  <div class="widget widget-categories mb-4 py-1">
+                    <h3 class="widget-title">List Links</h3>
+                    <ul id="shopCategories">
+                      <li class="has-children"><a href="#computers" data-toggle="collapse"><i class="widget-categories-indicator" data-feather="chevron-down"></i>ORDERS<span class="badge text-muted ml-1">(1138)</span></a>
+                        <ul class="collapse show" id="computers" data-parent="#shopCategories">
+                          <li><a href="{{order_list_url}}">My orders list<span class="badge text-success ml-1">(508)</span></a>
+                          </li>
+                          <li><a href="#">Order Refund</a>
+                            <ul>
+                              <li><a href="{{order_refund_list_url}}">Order Refund List<span class="badge text-muted ml-1">(110)</span></a></li>
+                              <li><a href="{{order_refund_create_url}}">Order Refund Create</a></li>
+                            </ul>
+                          </li>
+                          <li><a href="#">Order Received</a>
+                            <ul>
+                              <li><a href="{{order_received_create_url}}">Order Received Form</a></li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </li>
+                      <li class="has-children"><a class="collapsed" href="#tv" data-toggle="collapse"><i class="widget-categories-indicator" data-feather="chevron-down"></i>ACCOUNT &amp; INFO</a>
+                        <ul class="collapse" id="tv" data-parent="#shopCategories">
+                          <li><a href="{{user_profile_url}}">Self profile</a></li>
+                        </ul>
+                      </li>
+                      <li class="has-children"><a class="collapsed" href="#headphones" data-toggle="collapse"><i class="widget-categories-indicator" data-feather="chevron-down"></i>PRODUCT VIEWED<span class="badge text-info ml-1">(1239)</span></a>
+                        <ul class="collapse" id="headphones" data-parent="#shopCategories">
+                          <li><a href="{{user_wishlist_url}}">Products viewed<span class="badge text-muted ml-1">(752)</span></a></li>
+                        </ul>
+                      </li>
+                      <li class=""><a href="{% url 'profiles:emailMarketing' %}">Email Marketing</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="" id="UserPicture">
+            <!-- Customer picture-->
+              <a class="gallery-item mb-grid-gutter mx-auto" href="#" style="max-width: 18.75rem;"><img src="{% static 'dist/img/account/customer-lg.jpg' %}" alt="Photo">
+                <div class="gallery-caption">
+                  <div class="gallery-indicator"><i class="gallery-indicator-icon" data-feather="refresh-ccw"></i></div>Change profile picture
+                </div></a>
+              <!-- Technical support + Tickets (visible Desktop)-->
+              <div class="d-none d-lg-block">
+                <h6 class="font-size-sm mb-3 pb-2 border-bottom">Technical support</h6>
+                <ul class="list-unstyled">
+                  <li class="font-size-sm mb-2"><i class="text-muted mr-2" data-feather="mail" style="width: .875rem; height: .875rem;"></i><a class="nav-link-inline" href="mailto:support@example.com">{{user.email}}</a></li>
+                  <li class="font-size-sm mb-2"><i class="text-muted mr-2" data-feather="phone" style="width: .875rem; height: .875rem;"></i><a class="nav-link-inline" href="tel:+100331697720">+1 00 33 169 7720</a></li>
+                  <li class="font-size-sm mb-2"><i class="text-muted mr-2" data-feather="clock" style="width: .875rem; height: .875rem;"></i>1-2 business days</li>
+                </ul>
+                <div class="pt-2"><a class="btn btn-outline-secondary btn-sm btn-block" href="#"><i class="mr-1" data-feather="tag"></i>My tickets (1)</a><a class="btn btn-success btn-sm btn-block" href="#" data-toggle="modal" data-target="#open-ticket">Submit new ticket</a></div>
+              </div>
+            </div>
+          </div><!-- end sidebar -->
+
+          <div class="col-lg-9">
+            <!-- Page Content-->
+            <div class="pb-5 mb-sm-4">
+              <div class="row">
+                <!-- Main content-->
+                <div class="col-lg-12 offset-xl-/1">
+                  <!-- Customer details-->
+                  <div class="d-flex flex-wrap justify-content-between pb-4">
+                    <div class="pt-3 mr-3">
+                      <h3 class="mb-0">{{user|capfirst}}</h3><span class="font-size-sm text-warning">{{user.email}}</span>
+                    </div>
+                    <div class="pt-3"><a class="btn btn-outline-primary btn-sm" href="{% url 'account_logout' %}"><i class="mr-1" data-feather="log-out"></i>Sign Out</a></div>
+                  </div>
+                  <!--
+                  <ul class="list-unstyled border p-3 mb-4">
+                    <li class="pb-1"><span class="opacity-80">&ndash; Joined:</span><span class="font-weight-semibold ml-1">Jan 13, 2018</span></li>
+                    <li class="pb-1"><span class="opacity-80">&ndash; Total orders:</span><span class="font-weight-semibold ml-1">15</span></li>
+                    <li class="pb-1"><span class="opacity-80">&ndash; Total spent:</span><span class="font-weight-semibold ml-1">$5,864</span></li>
+                    <li><span class="opacity-80">&ndash; Reward points:</span><span class="font-weight-semibold ml-1">586</span></li>
+                  </ul>-->
+                  <div class="" data-aos="fade-up" data-aos-delay="200">
+                    <div class="box">
+                      <div class="icon"><i class="bi bi-card-checklist" data-feather="shopping-bag"></i></div>
+                      <p class="description"><span class="opacity-80">&ndash; Joined:</span><span class="font-weight-semibold ml-1">Jan 13, 2018</span></p>
+                      <p class="description"><span class="opacity-80">&ndash; Total orders:</span><span class="font-weight-semibold ml-1">18</span></p>
+                      <p class="description"><span class="opacity-80">&ndash; Total spent:</span><span class="font-weight-semibold ml-1">$2018</span></p>
+                      <p class="description"><span class="opacity-80">&ndash; Reward points:</span><span class="font-weight-semibold ml-1">267</span></p>
+                    </div>
+                  </div>
+                  <!-- Navigation (visible sm-up)-->
+                  <ul class="nav nav-tabs d-none d-sm-flex mt-4">
+                    <li class="nav-item"><a class="nav-link active" href="{{order_list_url}}"><i data-feather="shopping-bag"></i>&nbsp;My orders<span class="badge badge-pill badge-secondary bg-0 border ml-2"><span class="text-primary">1</span></span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{user_wishlist_url}}"><i data-feather="heart"></i>&nbsp;Wishlist<span class="badge badge-pill badge-secondary bg-0 border ml-2"><span class="text-primary">3</span></span></a></li>
+                    <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"><i data-feather="settings"></i>&nbsp;Account settings</a>
+                      <div class="dropdown-menu"><a class="dropdown-item" href="{{user_profile_url}}">Profile info</a>
+                        <div class="dropdown-divider"></div><a class="dropdown-item" href="#">Addresses</a>
+                        <div class="dropdown-divider"></div><a class="dropdown-item" href="#">Payment methods</a>
+                      </div>
+                    </li>
+                  </ul>
+                  <!-- Navigation (visible sm-down)-->
+                  <div class="d-sm-none pb-4">
+                    <button class="btn btn-primary btn-block mb-2" type="button" data-toggle="collapse" data-target="#account-menu"><i class="mr-2" data-feather="menu"></i>Menu</button>
+                    <div class="collapse" id="account-menu">
+                      <div class="list-group"><a class="list-group-item list-group-item-action active" href="{{order_list_url}}"><i class="mr-2" data-feather="shopping-bag" style="width: 1rem; height: 1rem;"></i>My orders<span class="badge badge-pill badge-secondary bg-0 border ml-2"><span class="text-primary">1</span></span></a><a class="list-group-item list-group-item-action" href="{{user_wishlist_url}}"><i class="mr-2" data-feather="heart" style="width: 1rem; height: 1rem;"></i>Wishlist<span class="badge badge-pill badge-secondary bg-0 border ml-2"><span class="text-primary">3</span></span></a><a class="list-group-item list-group-item-action" href="{{user_profile_url}}"><i class="mr-2" data-feather="user" style="width: 1rem; height: 1rem;"></i>Profile info</a><a class="list-group-item list-group-item-action" href="#"><i class="mr-2" data-feather="map-pin" style="width: 1rem; height: 1rem;"></i>Addresses</a><a class="list-group-item list-group-item-action" href="#"><i class="mr-2" data-feather="credit-card" style="width: 1rem; height: 1rem;"></i>Payment methods</a></div>
+                    </div>
+                  </div>
+
+                  {% block activity %}{% endblock activity %}<!-- Page Main activity goes HERE -->
+
+                  <!-- Technical support + Tickets (visible Mobile)-->
+                  <div class="d-lg-none bg-secondary px-3 py-4 mt-5">
+                    <h6 class="font-size-sm mb-3 pb-2 border-bottom">Technical support</h6>
+                    <ul class="list-unstyled">
+                      <li class="font-size-sm mb-2"><i class="text-muted mr-2" data-feather="mail" style="width: .875rem; height: .875rem;"></i><a class="nav-link-inline" href="mailto:support@example.com">{{user.email}}</a></li>
+                      <li class="font-size-sm mb-2"><i class="text-muted mr-2" data-feather="phone" style="width: .875rem; height: .875rem;"></i><a class="nav-link-inline" href="tel:+100331697720">+1 00 33 169 7720</a></li>
+                      <li class="font-size-sm mb-2"><i class="text-muted mr-2" data-feather="clock" style="width: .875rem; height: .875rem;"></i>1-2 business days</li>
+                    </ul>
+                    <div class="pt-2"><a class="btn btn-outline-secondary btn-sm btn-block" href="#"><i class="mr-1" data-feather="tag"></i>My tickets (1)</a><a class="btn btn-success btn-sm btn-block" href="#" data-toggle="modal" data-target="#open-ticket">Submit new ticket</a></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+
+    {% include 'includes/footer.html' %}    
+    
+    {% include 'snippets/js.html' %}
+
+    {% block javascript %}{% endblock javascript %}<!-- Page Specific JS goes HERE -->
+
+  </body>
+</html>  

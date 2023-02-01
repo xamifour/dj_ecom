@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block head_title %} seller Delete | {{ block.super }}{% endblock head_title %}
+
+{% block page_title %}
+  Delete {{ seller.title }}
+{% endblock page_title %}
+
+{% block breadcumb %}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'sellers:seller_update' seller.pk %}">{{ seller.seller_Code }}</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Confirm deletion</li>
+    </ol>
+  </nav>
+{% endblock breadcumb %}
+
+{% block content %}  
+  <h2 class="mb-3">Confirm deletion</h2>
+  <p class="lead">Are you sure you want to delete the seller <strong>"{{ seller.title }}"</strong>? You can not recover it after deletion. <br> Note: all objects under this as well as related items will be deleted.</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger btn-lg">Yes, I'm sure</button>
+    <a href="{% url 'sellers:seller_details' seller.pk %}" class="btn btn-outline-secondary btn-lg" role="button">Nevermind</a>
+  </form>
+{% endblock content %}

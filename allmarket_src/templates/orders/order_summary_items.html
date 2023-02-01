@@ -1,0 +1,74 @@
+
+<div class='table-responsive order-item'>
+  <table class="table">
+    <thead>
+      <!--<h2 class="h6 d-flex flex-wrap justify-content-between align-items-center px-4 py-3 bg-secondary"><span>Products</span><a class="" href="/"><i data-feather="chevron-left" style="width: 1.2rem; height: 1.2rem;"></i>Continue shopping</a></h2>
+    </thead>-->
+    <tbody class="">
+      {% for order_item in object.items.all %}
+      <tr class="" style="border-bottom: 1px solid #eee;">
+        <!--<th scope="row">{{ forloop.counter }}</th>-->
+        <td class="" style="width:170px; height: 160px;">
+          <a href="{{ order_item.item.get_absolute_url }}">
+              <img src="{{ order_item.item.img1.url }}" alt="product image" class="search-img rounded mx-auto img-fluid">
+          </a>
+        </td>     
+        <td class="product-name p-3">
+          <div class="">
+            <!--<b>{{ order_item.item.title }}</b>-->
+            <h2 class="pt-1 h5" style="font-weight: 500;">{{ order_item.item.title_and_description }}</h2>
+            <span>
+              {% if order_item.item.get_discount %}
+                <h3 class="h5" style="font-weight: 600;">${{ order_item.get_item_qty_amount }}
+                <span class="badge badge-info p-1 font-weight-lighter font-size-sm">Saving ${{ order_item.get_amount_saved_on_item }}</span></h3>
+              {% else %}
+                <h3 class="h5 font-weight-semibold">${{ order_item.get_item_qty_amount }}</h3>
+              {% endif %}
+            </span>
+            <div>
+              <a class="float-right" type="button" href="{% url 'orders:removeFromCart' order_item.item.slug %}">
+                <i class="text-danger" data-feather="trash-2"></i>
+              </a>             
+              <div class="input-group" style="max-width: 120px;">
+                <div class="input-group-prepend">
+                  <a href="{% url 'orders:reduceSingleItemInCart' order_item.item.slug %}"
+                    class="btn btn-outline-primary btn-sm">&minus;
+                  </a>
+                </div>
+                <input type="int" name="q" class="text-center" value="{{ order_item.quantity }}" min="1" style="width: 40px; border: 1px solid #c2d4d8;" readonly>
+                <div class="input-group-append">
+                  <a href="{% url 'orders:addToCart' order_item.item.slug %}"
+                    class="btn btn-outline-primary btn-sm">&plus;
+                  </a>
+                </div>
+              </div>
+
+              <small class="text-warning" >Stock Left: {{ order_item.get_product_qty_left }}</small>
+              <!--
+          <div>
+            <a class="float-right" type="button" href="{% url 'orders:removeFromCart' order_item.item.slug %}">
+              <i class="mr-1 text-danger" data-feather="trash-2"></i>
+            </a>
+            <a href="{% url 'orders:reduceSingleItemInCart' order_item.item.slug %}"><i class="mr-2" data-feather="minus"></i>
+            </a>
+            {{ order_item.quantity }}
+            <a href="{% url 'orders:addToCart' order_item.item.slug %}"><i class="ml-2" data-feather="plus"></i></a>
+          </div>
+              -->
+            </div>
+          </div>
+        </td>
+      </tr>  
+      {% empty %}
+      <tr>
+        <div>
+          <p class="text-danger">Your cart is empty</p>
+          <hr>
+          <a class='btn btn-primary float-right' href='/'><i data-feather="chevron-left" class="mr-2"></i>Continue shopping</a>
+        </div>
+      </tr>
+      {% endfor %}
+
+    </tbody>              
+  </table>
+</div>

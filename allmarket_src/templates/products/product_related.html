@@ -1,0 +1,57 @@
+
+<!-- Related products-->
+  <div class="container pb-5">
+    <h2 class="h4 pb-4 font-weight-semibold">You may also like</h2>
+    <div class="owl-carousel" data-owl-carousel="{ &quot;nav&quot;: false, &quot;dots&quot;: true, &quot;loop&quot;: true, &quot;margin&quot;: 15, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1},&quot;360&quot;:{&quot;items&quot;:2}, &quot;630&quot;:{&quot;items&quot;:3}, &quot;850&quot;:{&quot;items&quot;:4}, &quot;1200&quot;:{&quot;items&quot;:5}} }">
+    <!-- Product-->
+    {% for item in object_list %}
+    <div class="">
+      <div class="product-card">
+        <div class="product-thumb"><a class="product-thumb-link" href="{{ item.get_absolute_url }}"></a>
+          {% if item.get_discount %}
+          <span class="badge badge-danger rounded-0">{{ item.get_discount }}</span>
+          {% endif %}
+          <span class="product-wishlist-btn" data-toggle="tooltip" data-placement="left" title="Add to wishlist"><i data-feather="heart"></i></span><img height="160" width="160" src="{{ item.img1.url }}" alt="Product">
+        </div>
+        <div class="product-card-body text-center">{% if item.sub_category %}<a class="product-meta" href="{{ item.get_absolute_url }}">{{item.get_sub_category}}</a>{% endif %}
+          <h3 class="product-card-title"><a href="{{ item.get_absolute_url }}">{{item.get_name}}</a></h3>
+          <h2 class="h4 font-weight-light">
+            {% if item.get_discount %}
+              <del class="lead text-muted mr-2">${{ item.get_price }}</del><span class="text-primary">${{ item.get_discounted_price }}</span>
+            {% else %}
+              ${{ item.get_price }}
+            {% endif %}
+          </h2>
+        </div>
+        <div class="product-card-body body-hidden">
+          <div class="pb-2 text-center">
+            <div class="custom-control custom-option custom-control-inline mb-2">
+              <input class="custom-control-input" type="radio" name="size-5" id="s-5-95">
+              <label class="custom-option-label" for="s-5-95">9.5</label>
+            </div>
+            <div class="custom-control custom-option custom-control-inline mb-2">
+              <input class="custom-control-input" type="radio" name="size-5" id="s-5-9" checked>
+              <label class="custom-option-label" for="s-5-9">9</label>
+            </div>
+            <div class="custom-control custom-option custom-control-inline mb-2">
+              <input class="custom-control-input" type="radio" name="size-5" id="s-5-85">
+              <label class="custom-option-label" for="s-5-85">8.5</label>
+            </div>
+            <div class="custom-control custom-option custom-control-inline mb-2">
+              <input class="custom-control-input" type="radio" name="size-5" id="s-5-8">
+              <label class="custom-option-label" for="s-5-8">8</label>
+            </div>
+            <div class="custom-control custom-option custom-control-inline mb-2">
+              <input class="custom-control-input" type="radio" name="size-5" id="s-5-75">
+              <label class="custom-option-label" for="s-5-75">7.5</label>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-sm btn-block" type="button" data-toggle="toast" data-target="#cart-toast">Add to cart</button><a class="quick-view-btn" href="#quick-view" data-toggle="modal"><i class="mr-1" data-feather="eye"></i>Quick view</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+

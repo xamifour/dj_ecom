@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block head_title %} Cart | {{ block.super }}{% endblock head_title %}
+
+{% load static %}
+
+
+{% block content %}
+  <!-- Page Title-->
+  <div class="page-title-wrapper" aria-label="Page title">
+    <div class="container">
+      <h1 class="p/age-title h3">Your cart</h1><span class="d-block mt-2 text-muted"></span>
+    </div>
+  </div>
+  <!-- Page Content-->
+  <div class="container pb-5 mt-n2 mt-md-n3">
+    <div class="row">
+      <div class="col-xl-9 col-md-8">
+        {% if object.items.all %}
+        <h2 class="h6 d-flex flex-wrap justify-content-between align-items-center px-4 py-3 bg-secondary"><span>Products</span><a class="" href="/"><i data-feather="chevron-left" style="width: 1.2rem; height: 1.2rem;"></i>Continue shopping</a></h2>
+        {% endif %}       
+        <!-- Item-->
+        {% include 'orders/order_summary_items.html' %}
+      </div>
+      <!-- Sidebar-->
+      {% if object.items.all %}
+      <div class="col-xl-3 col-md-4 pt-3 pt-md-0">
+        <h2 class="h6 px-4 py-3 bg-secondary text-center">Subtotal</h2>
+        <div class="h3 font-weight-semibold text-center py-3">${{ object.get_total }}</div>
+        <hr class="mb-5">
+        {% include "orders/order_items_summary.html" with order=object %}
+        <!--
+        <h3 class="h6 pt-4 font-weight-semibold"><span class="badge badge-success mr-2">Note</span>Additional comments</h3>
+        <textarea class="form-control mb-3" id="order-comments" rows="5"></textarea>-->
+        <a class="btn btn-primary btn-block" href="{% url 'orders:checkout' %}"><i class="mr-2" data-feather="credit-card"></i>Proceed to Checkout</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}
+
+

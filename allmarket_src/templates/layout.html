@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{% block head_title %} All Shops {% endblock head_title %}</title>
+    <!-- SEO Meta Tags-->
+    <meta name="description" content="MStore - Modern Bootstrap E-commerce Template">
+    <meta name="keywords" content="bootstrap, shop, e-commerce, market, modern, responsive,  business, mobile, bootstrap 4, html5, css3, jquery, js, gallery, slider, touch, creative, clean">
+    <meta name="author" content="Createx Studio">
+    <!-- Viewport-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon and Touch Icons-->
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="mask-icon" color="#111" href="safari-pinned-tab.svg">
+    <meta name="msapplication-TileColor" content="#111">
+    <meta name="theme-color" content="#ffffff">  
+
+    {% include 'snippets/css.html' %}  
+
+    {% block extrahead %}{% endblock extrahead %}<!-- Page Specific head element goes HERE -->     
+    
+  </head>
+  <body>
+    
+    {% include 'snippets/preloader.html' %}
+    {% include 'includes/header.html' %}
+
+    {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+          {% if message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}Important: {% endif %}
+          {{ message }}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        {% endfor %}
+    {% endif %}
+
+    
+    {% block content %}{% endblock content %}<!-- Page Main Content goes HERE -->
+
+    {% include 'includes/footer.html' %}    
+    
+    {% include 'snippets/js.html' %}
+
+    {% block javascript %}{% endblock javascript %}<!-- Page Specific JS goes HERE -->
+
+  </body>
+</html>  

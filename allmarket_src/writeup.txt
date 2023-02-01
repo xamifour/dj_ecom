@@ -1,0 +1,199 @@
+CATEGORIES:
+
+Clothing & Fashion:
+Men's Wear
+Men's Shoe
+Women Wear
+Ladies bags
+
+
+Phones & Tablets:
+Smart Phones
+Tablets
+Phablets
+Desk Phones
+Codeless Phones
+Tablet Accessories
+Tablet Replacement Parts
+
+Furniture:
+Living Room
+Bed Room
+Kitchen
+
+
+Electronic Security:
+CCTV
+Access Control
+Video Bells
+Fence
+Under Vehicle Scanners
+
+
+Computers & Accessories:
+Laptops
+Desktops
+Servers
+Computer Accessories & Peripherals
+Computer Components
+Data Storage
+External Components
+Laptop Accessories
+Monitors
+Networking Products
+Power Strips & Surge Protectors
+Printers
+Scanners
+Inks
+Warranties & Services
+
+
+Electronics:
+Accessories & Supplies
+Camera & Photo
+Car & Vehicle Electronics
+Cell Phones & Accessories
+Computers & Accessories
+GPS & Navigation
+Headphones
+Home Audio
+Office Electronics
+Portable Audio & Video
+Security & Surveillance
+Service Plans
+Television & Video
+Video Game Consoles & Accessories
+Video Projectors
+Wearable Technology
+eBook Readers & Accessories
+
+
+Smart Home
+Amazon Smart Home
+Smart Home Lighting
+Smart Locks and Entry
+Security Cameras and Systems
+Plugs and Outlets
+New Smart Devices
+Heating and Cooling
+Detectors and Sensors
+Home Entertainment
+Pet
+Voice Assistants and Hubs
+Kitchen
+Vacuums and Mops
+Lawn and Garden
+WIFI and Networking
+Other Solutions
+
+
+Arts & Crafts
+Painting, Drawing & Art Supplies
+Beading & Jewelry Making
+Crafting
+Fabric
+Fabric Decorating
+Knitting & Crochet
+Needlework
+Organization, Storage & Transport
+Printmaking
+Scrapbooking & Stamping
+Sewing
+Party Decorations & Supplies
+Gift Wrapping Supplies
+
+
+Health And Household
+Baby & Child Care
+Health Care
+Household Supplies
+Medical Supplies & Equipment
+Oral Care
+Personal Care
+Sexual Wellness
+Sports Nutrition
+Stationery & Gift Wrapping Supplies
+Vision Care
+Vitamins & Dietary Supplements
+Wellness & Relaxation
+
+
+Baby
+Activity & Entertainment
+Apparel & Accessories
+Baby & Toddler Toys
+Baby Care
+Baby Stationery
+Car Seats & Accessories
+Diapering
+Feeding
+Gifts
+Nursery
+Potty Training
+Pregnancy & Maternity
+Safety
+Strollers & Accessories
+Travel Gear
+
+
+Movies & Television
+Movies
+TV Shows
+Blu-ray
+4K Ultra HD
+Best Sellers
+Today's Deals
+New Releases
+Pre-orders
+Kids & Family
+Prime Video
+
+
+Software
+Accounting & Finance
+Antivirus & Security
+Business & Office
+Children's
+Design & Illustration
+Digital Software
+Education & Reference
+Games
+Lifestyle & Hobbies
+Music
+Networking & Servers
+Operating Systems
+Photography
+Programming & Web Development
+Tax Preparation
+Utilities
+Video
+
+
+Home & Kitchen
+Kids' Home Store
+Kitchen & Dining
+Bedding
+Bath
+Furniture
+Home Décor
+Wall Art
+Lighting & Ceiling Fans
+Seasonal Décor
+Event & Party Supplies
+Heating, Cooling & Air Quality
+Irons & Steamers
+Vacuums & Floor Care
+Storage & Organization
+Cleaning Supplies
+
+
+Beauty And Personal Care
+Makeup
+Skin Care
+Hair Care
+Fragrance
+Foot, Hand & Nail Care
+Tools & Accessories
+Shave & Hair Removal
+Personal Care
+Oral Care

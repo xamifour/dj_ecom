@@ -1,0 +1,151 @@
+{% extends "layout.html" %}
+{% block head_title %} {{ seller.seller_Code }} Details | {{ block.super }}{% endblock head_title %}
+
+{% block breadcumb %}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'sellers:seller_details' seller.pk %}">{{ seller.seller_Code }}</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Details</li>
+
+      <!-- Breadcrumb Menu-->
+      <li class="breadcrumb-menu d-md-down-none">
+          <div class="btn-group" role="group" aria-label="Button group">
+              <a class="btn" href="#"><i class="icon-speech"></i></a>
+              <a class="btn" href="{% url 'home' %}"><i class="icon-graph"></i> &nbsp;Dashboard</a>
+              <a class="btn" href="#"><i class="icon-settings"></i> &nbsp;Settings</a>
+          </div>
+      </li>
+    </ol>
+  </nav>
+{% endblock breadcumb %}
+
+{% block content %}
+<div id="SellerDetails" class="inner-wrapper">
+
+  {% if messages %}
+      {% for message in messages %}
+          <div class="alert alert-success alert-dismissable">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+              {{ message }}
+          </div>
+      {% endfor %}
+  {% endif %}
+  
+  <div class="row page-show py-3">
+    <div class="col-md-5 col-12">
+      {% if seller.logo %}
+      <a href="{{ value.get_absolute_url }}">
+      <img src="{{ seller.logo.url }}" alt="seller logo" class="img-thumbnail rounded img-responsive img-fluid " style="width: 50%">
+      </a>
+      {% endif %}
+
+      {{ seller.owner }} | {{ seller.seller_Code }}
+
+      <br>
+      <a href="{% url 'sellers:seller_update' seller.pk %}" class="btn btn-primary my-3">Edit</a>
+      <a href="{% url 'sellers:seller_list' %}" class="btn btn-outline-secondary" role="button">Nevermind</a>
+      <a href="{% url 'sellers:seller_delete' seller.pk %}" class="btn btn-danger float-right my-3">Delete</a>
+    </div>
+    <div class="px-5 col-md-5">
+      <table>
+        <tbody>
+            <tr>
+                <td>Seller Title:</td>
+                <td class="td-data"><b>{{ seller.title }}</b></td>
+            </tr>
+            <tr>
+                <td>Reg Number:</td>
+                <td class="td-data"><b>{{ seller.reg_Number }}</b></td>
+            </tr> 
+            <tr>
+                <td>Postal Address:</td>
+                <td class="td-data"><b>{{ seller.postal_Address }}</b></td>
+            </tr> 
+            <tr>
+                <td>Physical Address:</td>
+                <td class="td-data text-danger"><b>{{ seller.physical_Address }}</b></td>
+            </tr>
+            <tr>
+                <td>Geo Address:</td>
+                <td class="td-data"><b>{{ seller.geo_Address }}</b></td>
+            </tr>
+            <tr>
+                <td>City:</td>
+                <td class="td-data"><b>{{ seller.city }}</b></td>
+            </tr> 
+            <tr>
+                <td>Country:</td>
+                <td class="td-data"><b>{{ seller.country }}</b></td>
+            </tr> 
+            <tr>
+                <td>Phone1:</td>
+                <td class="td-data text-danger"><b>{{ seller.phone1 }}</b></td>
+            </tr>
+            <tr>
+                <td>Phone2:</td>
+                <td class="td-data text-danger"><b>{{ seller.phone2 }}</b></td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td class="td-data"><b>{{ seller.email }}</b></td>
+            </tr>
+            <tr>
+                <td>Web:</td>
+                <td class="td-data"><b>{{ seller.web }}</b></td>
+            </tr> 
+            <tr>
+                <td>Category:</td>
+                <td class="td-data"><b>{{ seller.category }}</b></td>
+            </tr> 
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <br>
+
+  <h5 class="my-2">PRODUCT BATCHES</h5>
+  <div class="card">
+    <div class="card-header">
+        <i class="fa fa-list"></i> Product Batch List
+    </div>
+    <div class="card-body">
+      <table class="table table-hover table-bordered table-sm mb-0">
+        <thead>
+          <tr>
+            <th>Batch Title</th>
+            <th>Arrival Date</th>
+            <th>Origin</th>
+            <th>Destination</th>
+            <th class="text-right">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for productbatch in batch_seller %}
+            <tr>
+              <td class="align-middle"><a href="{% url 'sellers:productbatch_details' seller.pk productbatch.pk %}">{{ productbatch.title }}</a></td>
+              <td class="align-middle">{{ productbatch.arrival_Date}}</td>
+              <td class="align-middle">{{ productbatch.origin }}</td>
+              <td class="align-middle">{{ productbatch.destination }}</td>
+              <td class="text-right">
+                <a href="{% url 'sellers:productbatch_details' seller.pk productbatch.pk %}" class="btn btn-primary">Details</a>
+              </td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td class="bg-light text-center font-italic" colspan="5">
+                <p class="text-muted font-italic mb-0">You haven't created any product batch yet. Go ahead and <a href="">add the first product batch</a>.</p>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="my-3">
+    <a href="{% url 'sellers:productbatch_add' seller.pk %}" class="btn btn-primary btn-sm">Add new product batch</a>
+  </div>
+
+</div>
+{% endblock content %} 

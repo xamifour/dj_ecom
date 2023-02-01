@@ -1,0 +1,71 @@
+{% extends "profiles/profile_layout.html" %}
+{% block head_title %} Wishlist | {{ block.super }}{% endblock head_title %}
+
+
+{% block activity %}
+  <div class="col-lg-12 o/ffset-xl-1">
+    <!-- Navigation (visible sm-up)
+    <ul class="nav nav-tabs d-none d-sm-flex">
+      <li class="nav-item"><a class="nav-link" href="account-orders.html"><i data-feather="shopping-bag"></i>&nbsp;My orders<span class="badge badge-pill badge-secondary bg-0 border ml-2"><span class="text-primary">1</span></span></a></li>
+      <li class="nav-item"><a class="nav-link active" href="account-wishlist.html"><i data-feather="heart"></i>&nbsp;Wishlist<span class="badge badge-pill badge-secondary bg-0 border ml-2"><span class="text-primary">3</span></span></a></li>
+      <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"><i data-feather="settings"></i>&nbsp;Account settings</a>
+        <div class="dropdown-menu"><a class="dropdown-item" href="account-profile.html">Profile info</a>
+          <div class="dropdown-divider"></div><a class="dropdown-item" href="account-address.html">Addresses</a>
+          <div class="dropdown-divider"></div><a class="dropdown-item" href="account-payment.html">Payment methods</a>
+        </div>
+      </li>
+    </ul>-->
+    <!-- Navigation (visible sm-down)
+    <div class="d-sm-none pb-4">
+      <button class="btn btn-primary btn-block mb-2" type="button" data-toggle="collapse" data-target="#account-menu"><i class="mr-2" data-feather="menu"></i>Menu</button>
+      <div class="collapse" id="account-menu">
+        <div class="list-group"><a class="list-group-item list-group-item-action" href="account-orders.html"><i class="mr-2" data-feather="shopping-bag" style="width: 1rem; height: 1rem;"></i>My orders<span class="badge badge-pill badge-secondary bg-0 border ml-2"><span class="text-primary">1</span></span></a><a class="list-group-item list-group-item-action active" href="account-wishlist.html"><i class="mr-2" data-feather="heart" style="width: 1rem; height: 1rem;"></i>Wishlist<span class="badge badge-pill badge-secondary bg-0 border ml-2"><span class="text-primary">3</span></span></a><a class="list-group-item list-group-item-action" href="account-profile.html"><i class="mr-2" data-feather="user" style="width: 1rem; height: 1rem;"></i>Profile info</a><a class="list-group-item list-group-item-action" href="account-address.html"><i class="mr-2" data-feather="map-pin" style="width: 1rem; height: 1rem;"></i>Addresses</a><a class="list-group-item list-group-item-action" href="account-payment.html"><i class="mr-2" data-feather="credit-card" style="width: 1rem; height: 1rem;"></i>Payment methods</a></div>
+      </div>
+    </div>-->
+
+    <!-- Wishlist-->
+
+    <!-- Item-->
+    <div class="d-sm-flex justify-content-between my-4 pb-4 border-bottom">
+      <div class="media d-block d-sm-flex text-center text-sm-left"><a class="cart-item-thumb mx-auto mr-sm-4" href="shop-single-apparel.html"><img src="img/shop/apparel/cart/01.jpg" alt="Product"></a>
+        <div class="media-body pt-3">
+          <h3 class="product-card-title font-weight-semibold border-0 pb-0"><a href="shop-single-apparel.html">Calvin Klein Jeans Keds</a></h3>
+          <div class="font-size-sm"><span class="text-muted mr-2">Size:</span>8.5</div>
+          <div class="font-size-sm"><span class="text-muted mr-2">Color:</span>Black</div>
+          <div class="font-size-lg text-primary pt-2">$125.00</div>
+        </div>
+      </div>
+      <div class="pt-2 pl-sm-3 mx-auto mx-sm-0 text-center text-sm-left" style="max-width: 10rem;">
+        <button class="btn btn-outline-danger btn-sm btn-block" type="button"><i class="mr-1" data-feather="trash-2"></i>Remove</button>
+      </div>
+    </div>
+    <!-- Item-->
+    <div class="d-sm-flex justify-content-between my-4 pb-4 border-bottom">
+      <div class="media d-block d-sm-flex text-center text-sm-left"><a class="cart-item-thumb mx-auto mr-sm-4" href="shop-single-apparel.html"><img src="img/shop/apparel/cart/02.jpg" alt="Product"></a>
+        <div class="media-body pt-3">
+          <h3 class="product-card-title font-weight-semibold border-0 pb-0"><a href="shop-single-apparel.html">The North Face Hoodie</a></h3>
+          <div class="font-size-sm"><span class="text-muted mr-2">Size:</span>XL</div>
+          <div class="font-size-sm"><span class="text-muted mr-2">Color:</span>Gray</div>
+          <div class="font-size-lg text-primary pt-2">$134.00</div>
+        </div>
+      </div>
+      <div class="pt-2 pl-sm-3 mx-auto mx-sm-0 text-center text-sm-left" style="max-width: 10rem;">
+        <button class="btn btn-outline-danger btn-sm btn-block" type="button"><i class="mr-1" data-feather="trash-2"></i>Remove</button>
+      </div>
+    </div>
+    <!-- Item-->
+    <div class="d-sm-flex justify-content-between my-4 pb-4 border-bottom">
+      <div class="media d-block d-sm-flex text-center text-sm-left"><a class="cart-item-thumb mx-auto mr-sm-4" href="shop-single-apparel.html"><img src="img/shop/apparel/cart/03.jpg" alt="Product"></a>
+        <div class="media-body pt-3">
+          <h3 class="product-card-title font-weight-semibold border-0 pb-0"><a href="shop-single-apparel.html">Medicine Chameleon Sunglasses</a></h3>
+          <div class="font-size-sm"><span class="text-muted mr-2">Lenses:</span>Chameleon</div>
+          <div class="font-size-sm"><span class="text-muted mr-2">Frame:</span>Gray / Black</div>
+          <div class="font-size-lg text-primary pt-2">$47.00</div>
+        </div>
+      </div>
+      <div class="pt-2 pl-sm-3 mx-auto mx-sm-0 text-center text-sm-left" style="max-width: 10rem;">
+        <button class="btn btn-outline-danger btn-sm btn-block" type="button"><i class="mr-1" data-feather="trash-2"></i>Remove</button>
+      </div>
+    </div>
+  </div>
+{% endblock activity %}

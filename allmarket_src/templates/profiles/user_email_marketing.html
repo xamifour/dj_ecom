@@ -1,0 +1,20 @@
+{% extends "profiles/profile_layout.html" %}
+{% block head_title %} User Email Marketing | {{ block.super }}{% endblock head_title %}
+
+{% load crispy_forms_tags %}
+
+{% block activity %}
+<div class="" data-aos="fade-up" data-aos-delay="300">
+  <div class='box'>
+    {% if title %}<h2 class='h4 font-weight-semibold'>{{ title }}</h2>{% endif %}
+    <form method='POST' action='{% if action_url %}{{ action_url }}{% endif %}'>{% csrf_token %}
+      {% if next_url %}
+      <input type='hidden' name='next' value='{{ next_url }}' />
+      {% endif %}
+      {{form|crispy}}
+    	<!--{{ form.as_p }}-->
+    	<button type="submit" name="submit" class="btn btn-success btn-labeled my-3">Submit<span class="btn-label btn-label-right"><i class=""data-feather="check"></i></span></button>
+    </form>
+  </div>
+</div>
+{% endblock activity %}

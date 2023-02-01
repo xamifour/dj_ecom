@@ -1,0 +1,10 @@
+<div class="steps">
+  <div class="steps-body">
+    <a class="step step-completed" href="{% url 'orders:orderSummary' %}"><span class="step-indicator"><i data-feather="check"></i></span><span class="step-icon"><i data-feather="shopping-cart"></i></span>1. Shopping cart</a>
+    <a class="step step-completed" href="{% url 'orders:checkout' %}"><span class="step-indicator"><i data-feather="check"></i></span><span class="step-icon"><i data-feather="user"></i></span>2. Checkout</a>
+    <!--
+    <a class="step step-completed" href="{% url 'orders:checkoutComplete' %}"><span class="step-indicator"><i data-feather="check"></i></span><span class="step-icon"><i data-feather="truck"></i></span>3. Shipping</a>-->
+    <a class="step step-active" href="checkout-payment.html"><span class="step-icon"><i data-feather="credit-card"></i></span>3. Payment</a>
+    <a class="step step-completed" href="{% url 'orders:checkoutComplete' %}"><span class="step-icon"><i data-feather="check-circle"></i></span>4. Checkout Complate</a>
+  </div>
+</div>
